@@ -1,0 +1,45 @@
+{
+    "private": true,
+    "name": "@aoda-zhang/honey-service",
+    "version": "1.0.0",
+    "engines": {
+        "node": ">=22",
+        "pnpm": ">=9"
+    },
+    "scripts": {
+        "prepare": "husky",
+        "biome:check": "biome check . --write",
+        "biome:format": "biome format .",
+        "build:PROD": "cross-env NODE_ENV=prod nest build",
+        "build:UAT": "cross-env NODE_ENV=uat nest build",
+        "dev": "cross-env NODE_ENV=dev nest start --watch",
+        "uat": "cross-env NODE_ENV=uat nest start --watch",
+        "test": "cross-env NODE_ENV=test nest start --watch",
+        "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
+        "start:PROD": "cross-env NODE_ENV=prod node dist/main.js",
+        "start:debug": "nest start --debug --watch",
+        "lint-staged": "lint-staged"
+    },
+    "lint-staged": {
+        "src/**/*.{ts,js}": ["pnpm biome:check", "pnpm biome:format"]
+    },
+    "dependencies": {
+        "cross-env": "^7.0.3",
+        "dotenv": "^16.0.3",
+        "nodemon": "^3.1.0"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.8.3",
+        "@nestjs/cli": "^9.0.0",
+        "@types/node": "^18.0.3",
+        "husky": "^9.1.4",
+        "lint-staged": "^13.2.2",
+        "prettier": "^3.1.0",
+        "source-map-support": "^0.5.21",
+        "ts-loader": "^9.3.1",
+        "ts-node": "^10.8.2",
+        "tsconfig-paths": "^4.0.0",
+        "typescript": "^4.7.4"
+    },
+    "packageManager": "pnpm@9.7.0"
+}
