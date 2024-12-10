@@ -43,8 +43,8 @@ dist
 build
 
 # config
-packages/**/src/config/**
-!packages/**/src/config/index.ts
+**/**/src/config/**
+!**/**/src/config/index.ts
 
 
 # local logs

@@ -1,5 +1,6 @@
 {
-    "name": "@aoda-zhang/honey-service",
+    "private":true,
+    "name": "@aoda-zhang/gateway",
     "main": "dist/main.js",
     "version": "1.0.0",
     "engines": {
@@ -59,7 +60,6 @@
         "passport-local": "^1.0.0",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.5.5",
-        "shared-backEnd.git": "github:aoda-zhang/shared-backEnd",
         "swagger-ui-express": "^4.6.2",
         "uuid": "^9.0.1"
     },
