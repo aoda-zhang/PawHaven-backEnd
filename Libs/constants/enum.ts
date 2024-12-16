@@ -9,3 +9,8 @@ export enum UserRole {
     MAJOR = 'MAJOR',
     SUPER = 'SUPER'
 }
+
+export enum Decorators {
+    noHMAC = 'noHMAC',
+    noToken = 'noToken'
+}

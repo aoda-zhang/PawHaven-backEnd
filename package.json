@@ -21,7 +21,7 @@
         "lint-staged": "lint-staged"
     },
     "lint-staged": {
-        "src/**/*.{ts,js}": ["pnpm biome:check", "pnpm biome:format"]
+        "*.{ts,js}": ["pnpm biome:check", "pnpm biome:format"]
     },
     "dependencies": {
         "nodemon": "^3.1.0"

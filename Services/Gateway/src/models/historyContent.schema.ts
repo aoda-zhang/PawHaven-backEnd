@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 
-import { DBCollection } from './DBcollection'
-import CommonSchema from './common.schema'
+import CommonSchema from '../shared/schemas/common.schema'
+import { DBCollection } from './gateway.DBcollection'
 
 @Schema({ collection: DBCollection.HISTORY })
 export class HistoryContent extends CommonSchema {

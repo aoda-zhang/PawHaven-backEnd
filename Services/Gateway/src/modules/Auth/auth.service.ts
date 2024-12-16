@@ -10,7 +10,7 @@ import type UserInfoDTO from '@modules/User/dto/userInfo.dto'
 import type CreateUserDTO from '@modules/user/dto/create-user.dto'
 import type { UserService } from '@modules/user/user.service'
 import type { User } from '@shared/schemas/user.schema'
-import { DBCollection } from 'src/schemas/DBcollection'
+import { DBCollection } from 'src/models/gateway.DBcollection'
 
 @Injectable()
 export default class AuthService {

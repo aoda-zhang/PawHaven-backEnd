@@ -1,4 +1,5 @@
 {
+    "private":"true",
     "name": "@aoda-zhang/honey-service",
     "main": "dist/main.js",
     "version": "1.0.0",
@@ -8,8 +9,6 @@
     },
     "scripts": {
         "prepare": "husky",
-        "biome:check": "biome check . --write",
-        "biome:format": "biome format .",
         "build:PROD": "cross-env NODE_ENV=prod nest build",
         "build:UAT": "cross-env NODE_ENV=uat nest build",
         "dev": "cross-env NODE_ENV=dev nest start --watch",
@@ -17,11 +16,7 @@
         "test": "cross-env NODE_ENV=test nest start --watch",
         "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
         "start:PROD": "cross-env NODE_ENV=prod node dist/main.js",
-        "start:debug": "nest start --debug --watch",
-        "lint-staged": "lint-staged"
-    },
-    "lint-staged": {
-        "src/**/*.{ts,js}": ["pnpm biome:check", "pnpm biome:format"]
+        "start:debug": "nest start --debug --watch"
     },
     "dependencies": {
         "@nestjs/common": "^9.0.0",

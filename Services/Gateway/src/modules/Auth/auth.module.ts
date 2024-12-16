@@ -9,7 +9,7 @@ import HMACGuard from '@modules/Auth/middlewares/HMAC.guard'
 import JWTGuard from '@modules/Auth/middlewares/JWT.guard'
 import UserModule from '@modules/User/user.module'
 import { UserSchema } from '@shared/schemas/user.schema'
-import { DBCollection } from 'src/schemas/DBcollection'
+import { DBCollection } from 'src/models/gateway.DBcollection'
 
 import { AuthController } from './auth.controller'
 import AuthService from './auth.service'

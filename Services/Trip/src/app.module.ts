@@ -1,12 +1,20 @@
 import { Module } from '@nestjs/common'
-import { DestinationModule } from 'apps/Trip/modules/Destination/destination.module'
-import HistoryModule from 'apps/Trip/modules/History/history.module'
-import { UserModule } from '../shared/modules/User/user.module'
-import { AuthModule } from '../shared/modules/Auth/auth.module'
-import { ACLModule } from '../shared/modules/ACL/acl.module'
+import { ConfigModule } from '@nestjs/config'
+import getConfigs from './config'
+import SharedModule from '@shared/shared.module'
+import setDBConnection from '@shared/utils/setDBConnection'
 
 @Module({
-    imports: [DestinationModule, HistoryModule, UserModule, AuthModule, ACLModule],
+    imports: [
+        ConfigModule.forRoot({
+            load: [getConfigs],
+            envFilePath: '.env',
+            isGlobal: true,
+            cache: true
+        }),
+        setDBConnection('DB_TRIP'),
+        SharedModule
+    ],
     providers: []
 })
 export class AppModule {}

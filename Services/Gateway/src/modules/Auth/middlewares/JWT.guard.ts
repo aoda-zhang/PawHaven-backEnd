@@ -13,8 +13,7 @@ import {
     HttpBusinessMappingCode,
     HttpReqHeader
 } from '@shared/core/http/interface'
-import Decorators from '@shared/decorators/decorators.enum'
-import { LocaleKeys } from '@shared/types/enum'
+import { Decorators, LocaleKeys } from '@shared/types/enum'
 import trime from '@shared/utils/trime'
 
 @Injectable()

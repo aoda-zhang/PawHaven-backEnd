@@ -1,11 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-
-import { DBCollection } from 'src/schemas/DBcollection'
-
-import CommonSchema from '../shared/schemas/common.schema'
 import { type HistoryContent, HistoryContentSchema } from './historyContent.schema'
+import CommonSchema from '@shared/models/common.schema'
+import GatewayDBCollections from './gateway.DBcollection'
 
-@Schema({ collection: DBCollection.HISTORY, timestamps: true })
+@Schema({ collection: GatewayDBCollections.HISTORY, timestamps: true })
 export class History extends CommonSchema {
     // 关联用户姓名和id
     @Prop({

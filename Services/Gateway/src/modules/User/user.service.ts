@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import type { Role } from '@shared/schemas/role.schema'
 import type { User } from '@shared/schemas/user.schema'
 import type { Model } from 'mongoose'
-import { DBCollection } from 'src/schemas/DBcollection'
+import { DBCollection } from 'src/models/gateway.DBcollection'
 
 @Injectable()
 export class UserService {

@@ -4,13 +4,15 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import type { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
-import { Logger } from 'nestjs-pino'
+// import { Logger } from 'nestjs-pino'
 
 import initSwagger from '@shared/core/swagger'
 
 import { AppModule } from './app.module'
 
 const currentENV = process.env.NODE_ENV
+console.log('当前currentENV--------', currentENV)
+
 async function bootstrap() {
     // 业务service建议express
     // gateway 建议fastiy
@@ -19,7 +21,7 @@ async function bootstrap() {
     })
     const corsOptions: CorsOptions = app.get(ConfigService).get('cors')
     app.enableCors(corsOptions)
-    app.useLogger(app.get(Logger))
+    // app.useLogger(app.get(Logger))
     const prefix = app.get(ConfigService).get('http.prefix') ?? ''
     app.setGlobalPrefix(prefix)
     // Version control like v1 v2

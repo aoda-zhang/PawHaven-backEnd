@@ -2,13 +2,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 
 import * as yaml from 'js-yaml'
-
-export enum EnvConstant {
-    dev = 'DEV',
-    uat = 'UAT',
-    test = 'TEST',
-    prod = 'PROD'
-}
+import { EnvConstant } from '@shared/types/constant'
 
 const currentEnv = process.env.NODE_ENV ?? 'uat'
 

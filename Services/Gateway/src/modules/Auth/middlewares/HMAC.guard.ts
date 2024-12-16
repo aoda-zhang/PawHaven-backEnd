@@ -6,15 +6,10 @@ import {
 } from '@nestjs/common'
 import type { ConfigService } from '@nestjs/config'
 import type { Reflector } from '@nestjs/core'
-
-import type { EncryptService } from '@modules/Auth/encrypt.service'
-import {
-    HttpBusinessCode,
-    HttpBusinessMappingCode,
-    HttpReqHeader
-} from '@shared/core/http/interface'
-import Decorators from '@shared/decorators/decorators.enum'
 import trime from '@shared/utils/trime'
+import type { EncryptService } from '../encrypt.service'
+import { HttpBusinessCode, HttpBusinessMappingCode, HttpReqHeader } from '@shared/core/http/interface'
+import { Decorators } from '@shared/types/enum'
 
 @Injectable()
 export default class HMACGuard implements CanActivate {
