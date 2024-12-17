@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import getConfigs from './config'
 import SharedModule from '@shared/shared.module'
 import setDBConnection from '@shared/utils/setDBConnection'
+import getConfigs from './config'
 
 @Module({
     imports: [

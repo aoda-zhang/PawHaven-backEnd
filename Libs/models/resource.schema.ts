@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import CommonDBCollections from './common.DBcollection'
 import CommonSchema from './common.schema'
 import { Permission } from './permission.schema'
-import CommonDBCollections from './common.DBcollection'
 
 @Schema({ collection: CommonDBCollections.RESOURCE, timestamps: true })
 export class Resource extends CommonSchema {

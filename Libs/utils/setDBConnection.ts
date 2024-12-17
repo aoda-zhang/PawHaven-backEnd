@@ -1,5 +1,5 @@
-import { MongooseModule, type MongooseModuleOptions } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { MongooseModule, type MongooseModuleOptions } from '@nestjs/mongoose'
 
 const setDBConnection = (connectionName: `DB_${string}`) => {
     return MongooseModule.forRootAsync({

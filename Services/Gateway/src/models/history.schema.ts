@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { type HistoryContent, HistoryContentSchema } from './historyContent.schema'
 import CommonSchema from '@shared/models/common.schema'
 import GatewayDBCollections from './gateway.DBcollection'
+import { type HistoryContent, HistoryContentSchema } from './historyContent.schema'
 
 @Schema({ collection: GatewayDBCollections.HISTORY, timestamps: true })
 export class History extends CommonSchema {

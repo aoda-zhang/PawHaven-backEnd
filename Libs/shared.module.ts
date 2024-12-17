@@ -9,7 +9,7 @@ import MiddlewareModule from './middlewares/index.module'
 @Global()
 @Module({
     // imports: [DatabaseModule, SpeedlimitModule, MiddlewareModule, HealthCheckModule],
-    imports: [SpeedlimitModule,MiddlewareModule],
+    imports: [SpeedlimitModule, MiddlewareModule],
     providers: [
         // 成功请求拦截
         {
@@ -21,6 +21,6 @@ import MiddlewareModule from './middlewares/index.module'
             provide: APP_FILTER,
             useClass: HttpExceptionFilter
         }
-    ],
+    ]
 })
 export default class SharedModule {}

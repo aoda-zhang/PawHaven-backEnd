@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import CommonSchema from './common.schema'
 import CommonDBCollections from './common.DBcollection'
+import CommonSchema from './common.schema'
 
 @Schema({ collection: CommonDBCollections.ROLE, timestamps: true })
 export class Role extends CommonSchema {
