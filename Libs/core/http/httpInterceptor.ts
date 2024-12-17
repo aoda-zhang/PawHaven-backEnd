@@ -1,10 +1,14 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
-import { Observable, map } from 'rxjs'
-import { HttpResType } from './interface'
+import {
+    type CallHandler,
+    type ExecutionContext,
+    Injectable,
+    type NestInterceptor
+} from '@nestjs/common'
+import { type Observable, map } from 'rxjs'
+import type { HttpResType } from './interface'
 // 全局成功请求拦截处理
 @Injectable()
 export default class HttpInterceptor implements NestInterceptor {
-    constructor() {}
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         return next.handle().pipe(
             map((data) => {

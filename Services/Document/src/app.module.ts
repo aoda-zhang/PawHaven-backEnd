@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import SharedModule from '@shared/shared.module'
 import EmailModule from 'src/Email/email.module'
 import PDFModule from 'src/PDF/PDF.module'
+import getConfigs from './config'
 @Module({
     imports: [
         ConfigModule.forRoot({

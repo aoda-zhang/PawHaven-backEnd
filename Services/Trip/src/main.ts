@@ -11,8 +11,6 @@ import initSwagger from '@shared/core/swagger'
 import { AppModule } from './app.module'
 
 const currentENV = process.env.NODE_ENV
-console.log('当前currentENV--------', currentENV)
-
 async function bootstrap() {
     // 业务service建议express
     // gateway 建议fastiy

@@ -8,12 +8,11 @@
         "pnpm": ">=9"
     },
     "scripts": {
-        "prepare": "husky",
-        "build:PROD": "cross-env NODE_ENV=prod nest build",
-        "build:UAT": "cross-env NODE_ENV=uat nest build",
         "dev": "cross-env NODE_ENV=dev nest start --watch",
         "uat": "cross-env NODE_ENV=uat nest start --watch",
         "test": "cross-env NODE_ENV=test nest start --watch",
+        "build:PROD": "cross-env NODE_ENV=prod nest build",
+        "build:UAT": "cross-env NODE_ENV=uat nest build",
         "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
         "start:PROD": "cross-env NODE_ENV=prod node dist/main.js",
         "start:debug": "nest start --debug --watch"
@@ -42,8 +41,6 @@
         "helmet": "^6.1.5",
         "js-yaml": "^4.1.0",
         "mongoose": "^7.5.2",
-        "nestjs-pino": "^3.5.0",
-        "nodemon": "^3.1.0",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.5.5",
         "swagger-ui-express": "^4.6.2",

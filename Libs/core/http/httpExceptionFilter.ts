@@ -1,10 +1,15 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, Injectable } from '@nestjs/common'
-import { HttpResType } from './interface'
+import {
+    type ArgumentsHost,
+    Catch,
+    type ExceptionFilter,
+    HttpException,
+    Injectable
+} from '@nestjs/common'
+import type { HttpResType } from './interface'
 // 全局错误拦截处理
 @Injectable()
 @Catch(HttpException)
 export default class HttpExceptionFilter implements ExceptionFilter {
-    constructor() {}
     catch(exception: HttpException, host: ArgumentsHost) {
         const ctx = host.switchToHttp() // 获取请求上下文
         const response = ctx.getResponse()

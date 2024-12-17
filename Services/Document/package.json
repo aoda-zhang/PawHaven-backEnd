@@ -7,7 +7,6 @@
         "pnpm": ">=9"
     },
     "scripts": {
-        "biome:check": "biome check . --write --unsafe --files-ignore-unknown=true --no-errors-on-unmatched",
         "build:PROD": "cross-env NODE_ENV=prod nest build",
         "build:UAT": "cross-env NODE_ENV=uat nest build",
         "dev": "cross-env NODE_ENV=dev nest start --watch",
@@ -15,11 +14,7 @@
         "test": "cross-env NODE_ENV=test nest start --watch",
         "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
         "start:PROD": "cross-env NODE_ENV=prod node dist/main.js",
-        "start:debug": "nest start --debug --watch",
-        "lint-staged": "lint-staged"
-    },
-    "lint-staged": {
-        "src/**/*.{ts,js}": ["pnpm biome:check"]
+        "start:debug": "nest start --debug --watch"
     },
     "dependencies": {
         "@nestjs-modules/mailer": "^2.0.2",
@@ -49,7 +44,6 @@
         "js-yaml": "^4.1.0",
         "mongoose": "^7.5.2",
         "nodemailer": "^6.9.16",
-        "nodemon": "^3.1.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "reflect-metadata": "^0.1.13",
@@ -58,7 +52,6 @@
         "uuid": "^9.0.1"
     },
     "devDependencies": {
-        "@biomejs/biome": "^1.8.3",
         "@nestjs/cli": "^9.0.0",
         "@nestjs/schematics": "^9.0.0",
         "@nestjs/testing": "^9.0.0",

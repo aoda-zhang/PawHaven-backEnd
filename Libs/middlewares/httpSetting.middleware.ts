@@ -6,7 +6,7 @@ import getTokenFromHeader from '@shared/utils/overWriteHeader'
 
 @Injectable()
 export class ApiSettingMiddleware implements NestMiddleware {
-    use(req: Request, res: Response, next: NextFunction) {
+    use(req: Request, _res: Response, next: NextFunction) {
         const token = getTokenFromHeader(req)
         // 将 Bearer Token 重新命名为 "access-token"
         req.headers[HttpReqHeader.accessToken] = token
