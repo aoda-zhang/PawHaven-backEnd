@@ -13,7 +13,7 @@ interface SharedModuleOptions {
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
     // the DB connection key in configs, multiple DB is support
-    DBConnectKey: `DB_${string}`[]
+    DBConnectKeys: string[]
     isIntergrateSpeedLimit?: boolean
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
@@ -24,7 +24,7 @@ class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
         const {
             configFilePath,
-            DBConnectKey,
+            DBConnectKeys,
             isIntergrateSpeedLimit = true,
             isIntergrateMiddware = true,
             isIntergrateHttpExceptionFilter = true,
@@ -36,8 +36,8 @@ class SharedModule {
             if (configFilePath) {
                 imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
-            if (DBConnectKey) {
-                imports = [...imports, DatabaseModule.forRoot(DBConnectKey)]
+            if (DBConnectKeys) {
+                imports = [...imports, DatabaseModule.forRoot(DBConnectKeys)]
             }
             if (isIntergrateSpeedLimit) {
                 imports = [...imports, SpeedlimitModule]

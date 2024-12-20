@@ -10,7 +10,7 @@ import { UserAccessInfo } from '@modules/User/dto/interface'
 import UserInfoDTO from '@modules/User/dto/userInfo.dto'
 import UserService from '@modules/User/user.service'
 import { User } from '@shared/models/user.schema'
-import GatewayDBCollections from 'src/models/gateway.DBcollection'
+import GatewayDBCollections from 'src/models/center.DBcollection'
 
 @Injectable()
 export default class AuthService {

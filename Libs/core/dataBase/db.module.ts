@@ -9,7 +9,7 @@ class DatabaseModule {
      * dynamic Mongoose connection
      * @param dbConnectionKeys db connection keys from config
      */
-    static forRoot(dbConnectionKeys: `DB_${string}`[]): DynamicModule {
+    static forRoot(dbConnectionKeys: string[]): DynamicModule {
         const isMultipleDB = dbConnectionKeys?.length > 1
         const connectionProviders = dbConnectionKeys?.map((key) => ({
             connectionName: DBNames?.[key],

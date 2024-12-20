@@ -1,11 +1,9 @@
-import { Global, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-
-import CommonDBCollections from '@shared/models/common.DBcollection'
 import { ResourceSchema } from '@shared/models/resource.schema'
 import { RoleSchema } from '@shared/models/role.schema'
 import { UserSchema } from '@shared/models/user.schema'
-import GatewayDBCollections from 'src/models/gateway.DBcollection'
+import GatewayDBCollections from 'src/models/center.DBcollection'
 import ACLController from './ACLs.controller'
 import ACLService from './ACLs.service'
 
