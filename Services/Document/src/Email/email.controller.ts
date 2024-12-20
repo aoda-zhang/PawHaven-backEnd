@@ -1,13 +1,11 @@
-import { Body, Controller, Logger, Post, Req } from '@nestjs/common'
+import { Body, Controller, Post, Req } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import type { EmailService } from './email.service'
-import type { EmailPayload } from './types'
+import { EmailService } from './email.service'
+import { EmailPayload } from './types'
 
 @ApiTags('email module')
 @Controller('email')
 export class EmailController {
-    // logger: Logger = new Logger(HistoryController.name, { timestamp: true })
-
     constructor(private readonly emailService: EmailService) {}
 
     @Post('/send')

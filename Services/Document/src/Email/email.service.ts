@@ -1,10 +1,8 @@
-import type { ISendMailOptions, MailerService } from '@nestjs-modules/mailer'
+import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer'
 import { Injectable } from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
-import { InjectModel } from '@nestjs/mongoose'
+import { ConfigService } from '@nestjs/config'
 import { render } from '@react-email/components'
-import type { Model } from 'mongoose'
-import type { EmailPayload } from './types'
+import { EmailPayload } from './types'
 
 @Injectable()
 export class EmailService {

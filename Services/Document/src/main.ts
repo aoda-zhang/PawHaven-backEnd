@@ -38,7 +38,7 @@ async function bootstrap() {
     await initSwagger(app)
 
     // avoid attack
-    app.use(helmet()) // 防止跨站脚本攻击等安全风险
+    app.use(helmet())
 
     const port = app.get(ConfigService).get('http.port') ?? 3000
     await app

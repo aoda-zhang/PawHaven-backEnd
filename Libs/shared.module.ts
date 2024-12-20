@@ -11,7 +11,7 @@ interface SharedModuleOptions {
     // the env config file path, e.g.
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
-    confileFilePath: string
+    configFilePath: string
     // the DB connection key in configs, multiple DB is support
     DBConnectKey: `DB_${string}`[]
     isIntergrateSpeedLimit?: boolean
@@ -23,7 +23,7 @@ interface SharedModuleOptions {
 class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
         const {
-            confileFilePath,
+            configFilePath,
             DBConnectKey,
             isIntergrateSpeedLimit = true,
             isIntergrateMiddware = true,
@@ -33,8 +33,8 @@ class SharedModule {
 
         const getImports = () => {
             let imports = []
-            if (confileFilePath) {
-                imports = [...imports, ConfigsModule.forRoot(confileFilePath)]
+            if (configFilePath) {
+                imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
             if (DBConnectKey) {
                 imports = [...imports, DatabaseModule.forRoot(DBConnectKey)]

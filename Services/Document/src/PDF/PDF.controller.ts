@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
-import type { Response } from 'express'
-import type CreatePDFDTO from './DTO/create-PDF.DTO'
-import type PDFService from './PDF.service'
+import { Response } from 'express'
+import CreatePDFDTO from './DTO/create-PDF.DTO'
+import PDFService from './PDF.service'
 
 @Controller('PDF')
 export default class PDFController {
