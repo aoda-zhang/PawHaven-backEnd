@@ -3,14 +3,12 @@ import { Injectable } from '@nestjs/common'
 import type { ConfigService } from '@nestjs/config'
 import { InjectModel } from '@nestjs/mongoose'
 import { render } from '@react-email/components'
-import { DBCollection } from '@shared/constant/DBcollection'
 import type { Model } from 'mongoose'
 import type { EmailPayload } from './types'
 
 @Injectable()
 export class EmailService {
     constructor(
-        @InjectModel(DBCollection.HISTORY) private HistoryModal: Model<History>,
         private readonly mailService: MailerService,
         private readonly configs: ConfigService
     ) {}

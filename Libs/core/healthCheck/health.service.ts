@@ -1,6 +1,6 @@
 import { BadGatewayException, Injectable } from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
-import type {
+import { ConfigService } from '@nestjs/config'
+import {
     DiskHealthIndicator,
     HealthCheckService,
     MemoryHealthIndicator,

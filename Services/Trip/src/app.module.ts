@@ -1,20 +1,12 @@
+import path from 'node:path'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { EnvConstant } from '@shared/constants/constant'
 import SharedModule from '@shared/shared.module'
-import setDBConnection from '@shared/utils/setDBConnection'
-import getConfigs from './config'
+const currentEnv = process.env.NODE_ENV ?? 'uat'
+const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            load: [getConfigs],
-            envFilePath: '.env',
-            isGlobal: true,
-            cache: true
-        }),
-        setDBConnection('DB_TRIP'),
-        SharedModule
-    ],
+    imports: [SharedModule.forRoot({ confileFilePath: configFilePath, DBConnectKey: ['DB_TRIP'] })],
     providers: []
 })
 export class AppModule {}

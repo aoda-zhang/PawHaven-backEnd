@@ -1,19 +1,14 @@
-import {
-    BadRequestException,
-    type CanActivate,
-    type ExecutionContext,
-    Injectable
-} from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
-import type { Reflector } from '@nestjs/core'
-import type { JwtService } from '@nestjs/jwt'
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Reflector } from '@nestjs/core'
+import { JwtService } from '@nestjs/jwt'
+import { Decorators, LocaleKeys } from '@shared/constants/enum'
 
 import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
 } from '@shared/core/http/interface'
-import { Decorators, LocaleKeys } from '@shared/types/enum'
 import trime from '@shared/utils/trime'
 
 @Injectable()

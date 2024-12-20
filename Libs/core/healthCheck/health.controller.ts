@@ -1,9 +1,9 @@
 import { Controller, Get, Req } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { HealthCheck } from '@nestjs/terminus'
-import type { Request } from 'express'
+import { Request } from 'express'
 
-import type { HealthService } from './health.service'
+import { HealthService } from './health.service'
 
 @Controller('checker')
 @ApiTags('System health check')

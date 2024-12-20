@@ -1,16 +1,14 @@
-import type ACLService from '@modules/ACL/ACLs.service'
+import ACLService from '@modules/ACL/ACLs.service'
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Role } from '@shared/schemas/role.schema'
-import type { User } from '@shared/schemas/user.schema'
-import type { Model } from 'mongoose'
-import { DBCollection } from 'src/models/gateway.DBcollection'
+import CommonDBCollections from '@shared/models/common.DBcollection'
+import { User } from '@shared/models/user.schema'
+import { Model } from 'mongoose'
 
 @Injectable()
-export class UserService {
+class UserService {
     constructor(
-        @InjectModel(DBCollection.USER) private userModel: Model<User>,
-        @InjectModel(DBCollection.ROLE) private roleModel: Model<Role>,
+        @InjectModel(CommonDBCollections.USER) private userModel: Model<User>,
         private ACL: ACLService
     ) {}
 
@@ -39,3 +37,4 @@ export class UserService {
         }
     }
 }
+export default UserService

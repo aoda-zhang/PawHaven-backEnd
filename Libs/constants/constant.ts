@@ -6,6 +6,6 @@ export const EnvConstant = {
 }
 
 export const DBNames = {
-    DB_TRIP: 'TRIP',
-    DB_GATEWAY: 'GATEWAY'
+    DB_TRIP: 'DB_TRIP',
+    DB_GATEWAY: 'DB_GATEWAY'
 }

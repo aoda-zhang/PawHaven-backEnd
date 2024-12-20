@@ -1,22 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import type { Resource } from '@shared/schemas/resource.schema'
-import type { Role } from '@shared/schemas/role.schema'
+import { Resource } from '@shared/models/resource.schema'
+import { Role } from '@shared/models/role.schema'
 import { plainToClass } from 'class-transformer'
 import { validate } from 'class-validator'
-import type { Model } from 'mongoose'
-import { DBCollection } from 'src/models/gateway.DBcollection'
+import { Model } from 'mongoose'
+import GatewayDBCollections from 'src/models/gateway.DBcollection'
 import ResourceDTO from './dto/resource.dto'
-import type RoleUpdateDTO from './dto/role-update'
-import type RoleDTO from './dto/role.dto'
+import RoleUpdateDTO from './dto/role-update'
+import RoleDTO from './dto/role.dto'
 
 @Injectable()
 export default class ACLService {
     constructor(
-        @InjectModel(DBCollection.ROLE)
-        private roleModel: Model<Role>,
-        @InjectModel(DBCollection.RESOURCE)
-        private resourceModel: Model<Resource>
+        @InjectModel(GatewayDBCollections.ROLE) private roleModel: Model<Role>,
+        @InjectModel(GatewayDBCollections.RESOURCE) private resourceModel: Model<Resource>
     ) {}
 
     validaeResource = async (resource: ResourceDTO) => {

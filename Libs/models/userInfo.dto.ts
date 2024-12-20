@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator'
-import type { Schema } from 'mongoose'
+import { Schema } from 'mongoose'
 
 export default class UserInfoDTO {
     // 必选项描述

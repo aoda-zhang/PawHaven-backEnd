@@ -1,13 +1,14 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common'
-import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
-import type { NestExpressApplication } from '@nestjs/platform-express'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
 // import { Logger } from 'nestjs-pino'
 
 import initSwagger from '@shared/core/swagger'
 
+import { EnvConstant } from '@shared/constants/constant'
 import { AppModule } from './app.module'
 
 const currentENV = process.env.NODE_ENV
@@ -28,22 +29,20 @@ async function bootstrap() {
     })
     app.useGlobalPipes(
         new ValidationPipe({
-            // 自动转换定义的字段类型
             transform: true,
-            // 清除dto中未定义的字段
             whitelist: true
         })
     )
     await initSwagger(app)
-    app.use(helmet()) // 防止跨站脚本攻击等安全风险
+    app.use(helmet())
     const port = app.get(ConfigService).get('http.port') ?? 3000
     await app
         .listen(port, () => {
-            // eslint-disable-next-line no-unused-expressions
-            currentENV === 'uat' && console.log(`本地开发运行在 http://localhost:${port}`)
+            ;[EnvConstant.dev, EnvConstant.uat].includes(currentENV?.toUpperCase()) &&
+                console.log(`Successfully run at http://localhost:${port}`)
         })
         .catch((error) => {
-            console.error(`应用启动异常:${error}`)
+            console.error(`Application run failed with issue :${error}`)
         })
 }
 bootstrap()

@@ -1,4 +1,4 @@
-import type { Request } from 'express'
+import { Request } from 'express'
 
 import { HttpReqHeader } from '@shared/core/http/interface'
 

@@ -1,19 +1,14 @@
-import {
-    BadRequestException,
-    type CanActivate,
-    type ExecutionContext,
-    Injectable
-} from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
-import type { Reflector } from '@nestjs/core'
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Reflector } from '@nestjs/core'
+import { Decorators } from '@shared/constants/enum'
 import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
 } from '@shared/core/http/interface'
-import { Decorators } from '@shared/types/enum'
 import trime from '@shared/utils/trime'
-import type { EncryptService } from '../encrypt.service'
+import { EncryptService } from '../encrypt.service'
 
 @Injectable()
 export default class HMACGuard implements CanActivate {

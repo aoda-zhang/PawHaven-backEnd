@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'
 import { MongooseModule } from '@nestjs/mongoose'
@@ -8,17 +8,16 @@ import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
 import HMACGuard from '@modules/Auth/middlewares/HMAC.guard'
 import JWTGuard from '@modules/Auth/middlewares/JWT.guard'
 import UserModule from '@modules/User/user.module'
-import { UserSchema } from '@shared/schemas/user.schema'
-import { DBCollection } from 'src/models/gateway.DBcollection'
 
+import CommonDBCollections from '@shared/models/common.DBcollection'
+import { UserSchema } from '@shared/models/user.schema'
 import { AuthController } from './auth.controller'
 import AuthService from './auth.service'
 import { EncryptService } from './encrypt.service'
-// 提升为全局模块
-@Global()
+
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: DBCollection.USER, schema: UserSchema }]),
+        MongooseModule.forFeature([{ name: CommonDBCollections.USER, schema: UserSchema }]),
         JwtModule,
         ACLModule,
         UserModule

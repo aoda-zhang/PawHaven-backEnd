@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import type ACLService from './ACLs.service'
-import type ResourceDTO from './dto/resource.dto'
-import type RoleUpdateDTO from './dto/role-update'
-import type RoleDTO from './dto/role.dto'
+import ACLService from './ACLs.service'
+import ResourceDTO from './dto/resource.dto'
+import RoleUpdateDTO from './dto/role-update'
+import RoleDTO from './dto/role.dto'
 import ACLPermissions from './middlewares/ACL.decorator'
 
 @ApiTags('ACL module')

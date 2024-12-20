@@ -1,17 +1,15 @@
+import ACLModule from '@modules/ACL/ACLs.module'
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { RoleSchema } from '@shared/schemas/role.schema'
-import { UserSchema } from '@shared/schemas/user.schema'
-import { DBCollection } from 'src/models/gateway.DBcollection'
+import CommonDBCollections from '@shared/models/common.DBcollection'
+import { UserSchema } from '@shared/models/user.schema'
 import { UserController } from './user.controller'
-import { UserService } from './user.service'
+import UserService from './user.service'
 
 @Module({
     imports: [
-        MongooseModule.forFeature([
-            { name: DBCollection.USER, schema: UserSchema },
-            { name: DBCollection.ROLE, schema: RoleSchema }
-        ])
+        MongooseModule.forFeature([{ name: CommonDBCollections.USER, schema: UserSchema }]),
+        ACLModule
     ],
     controllers: [UserController],
     providers: [UserService],

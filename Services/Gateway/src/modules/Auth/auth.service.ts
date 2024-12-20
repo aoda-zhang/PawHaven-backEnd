@@ -1,16 +1,16 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
-import type { ConfigService } from '@nestjs/config'
-import type { JwtService } from '@nestjs/jwt'
+import { ConfigService } from '@nestjs/config'
+import { JwtService } from '@nestjs/jwt'
 import { InjectModel } from '@nestjs/mongoose'
 import * as bcrypt from 'bcrypt'
-import type { Model, Schema } from 'mongoose'
+import { Model, Schema } from 'mongoose'
 
-import type { UserAccessInfo } from '@modules/User/dto/interface'
-import type UserInfoDTO from '@modules/User/dto/userInfo.dto'
-import type CreateUserDTO from '@modules/user/dto/create-user.dto'
-import type { UserService } from '@modules/user/user.service'
-import type { User } from '@shared/schemas/user.schema'
-import { DBCollection } from 'src/models/gateway.DBcollection'
+import CreateUserDTO from '@modules/User/dto/create-user.dto'
+import { UserAccessInfo } from '@modules/User/dto/interface'
+import UserInfoDTO from '@modules/User/dto/userInfo.dto'
+import UserService from '@modules/User/user.service'
+import { User } from '@shared/models/user.schema'
+import GatewayDBCollections from 'src/models/gateway.DBcollection'
 
 @Injectable()
 export default class AuthService {
@@ -23,7 +23,7 @@ export default class AuthService {
     private refreshTokenExpiresIn: string
 
     constructor(
-        @InjectModel(DBCollection.USER) private UserModel: Model<User>,
+        @InjectModel(GatewayDBCollections.USER) private UserModel: Model<User>,
         private jwtService: JwtService,
         private configService: ConfigService,
         private userService: UserService

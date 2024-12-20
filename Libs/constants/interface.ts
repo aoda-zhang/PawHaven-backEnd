@@ -1,5 +1,5 @@
-import type UserInfoDTO from '@shared/models/userInfo.dto'
-import type { LocaleKeys } from './enum'
+import UserInfoDTO from '@shared/models/userInfo.dto'
+import { LocaleKeys } from './enum'
 
 interface ExtendedHeader {
     user: UserInfoDTO

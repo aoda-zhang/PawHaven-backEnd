@@ -1,9 +1,7 @@
-import { Body, Controller, Put, Req } from '@nestjs/common'
-
-// import ACLPermissions from '@shared/decorators/ACL.decorator'
+import { Body, Controller, Put } from '@nestjs/common'
 
 import ACLPermissions from '@modules/ACL/middlewares/ACL.decorator'
-import type { UserService } from './user.service'
+import UserService from './user.service'
 
 @Controller('user')
 export class UserController {

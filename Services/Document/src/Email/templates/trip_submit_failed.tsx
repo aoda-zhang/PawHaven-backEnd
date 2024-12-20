@@ -1,16 +1,16 @@
-import { Button, Html } from '@react-email/components'
-import React from 'react'
+import { Button, Html } from "@react-email/components";
+import React from "react";
 
 interface Props {
-    url: string
+  url: string;
 }
 const tripSbumitFailed = (props: Props) => {
-    const { url } = props
+  const { url } = props;
 
-    return (
-        <Html lang="en">
-            <Button href={url}>Click me</Button>
-        </Html>
-    )
-}
-export default tripSbumitFailed
+  return (
+    <Html lang="en">
+      <Button href={url}>Click me</Button>
+    </Html>
+  );
+};
+export default tripSbumitFailed;

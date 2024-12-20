@@ -1,11 +1,11 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common'
-import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
-import type { NestExpressApplication } from '@nestjs/platform-express'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import initSwagger from '@shared/core/swagger'
-import { AppModule } from 'app.module'
 import helmet from 'helmet'
+import AppModule from './app.module'
 
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {

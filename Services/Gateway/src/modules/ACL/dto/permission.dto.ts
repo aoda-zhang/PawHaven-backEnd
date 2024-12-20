@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { ResourceType } from '@shared/models/permission.schema'
 import { Type } from 'class-transformer'
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator'
-
-import { ResourceType } from '@shared/schemas/permission.schema'
 
 export default class PermissionDTO {
     @ApiProperty({ description: '权限分类', required: true })

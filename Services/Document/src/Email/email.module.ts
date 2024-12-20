@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 
 import { MailerModule } from '@nestjs-modules/mailer'
-import { ConfigModule, type ConfigService } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { EmailController } from './email.controller'
 import { EmailService } from './email.service'
 
@@ -20,7 +20,8 @@ import { EmailService } from './email.service'
                         pass: configs.get('email')?.pwd ?? ''
                     }
                 }
-            })
+            }),
+            inject: [ConfigService]
         })
     ],
     controllers: [EmailController],
