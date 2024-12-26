@@ -1,7 +1,6 @@
-import { readFileSync } from 'node:fs'
 import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import * as yaml from 'js-yaml'
+import getConfigValues from '@shared/utils/getConfigValues'
 
 @Module({})
 class ConfigsModule {
@@ -10,22 +9,9 @@ class ConfigsModule {
      * @param configFilePath config file path
      */
     static forRoot(configFilePath: string): DynamicModule {
-        const getConfigValues = () => {
-            try {
-                const yamlContent = readFileSync(configFilePath, 'utf8')
-                if (Object.keys(yamlContent)?.length > 0) {
-                    return yaml.load(readFileSync(configFilePath, 'utf8')) as Record<string, any>
-                }
-                console.error('No config file exist！！！')
-                return {}
-            } catch (error) {
-                console.error(`get config value error: ${error}`)
-                return {}
-            }
-        }
-
+        const configValues = getConfigValues(configFilePath)
         const DynamicConfigModule = ConfigModule.forRoot({
-            load: [getConfigValues],
+            load: [() => configValues],
             envFilePath: '.env',
             isGlobal: true,
             cache: true

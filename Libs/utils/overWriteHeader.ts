@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-import { HttpReqHeader } from '@shared/core/http/interface'
+import { HttpReqHeader } from '@shared/core/httpClient/interface'
 
 const getTokenFromHeader = (request: Request) => {
     if (request?.headers?.[HttpReqHeader.accessToken]) {

@@ -13,8 +13,6 @@ import { AppModule } from './app.module'
 
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
-    // 业务service建议express
-    // gateway 建议fastiy
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: true
     })

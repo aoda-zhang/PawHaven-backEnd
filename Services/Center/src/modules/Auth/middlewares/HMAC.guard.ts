@@ -6,7 +6,7 @@ import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
-} from '@shared/core/http/interface'
+} from '@shared/core/httpClient/interface'
 import trime from '@shared/utils/trime'
 import { EncryptService } from '../encrypt.service'
 

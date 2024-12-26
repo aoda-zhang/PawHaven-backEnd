@@ -1,7 +1,7 @@
 import { Injectable, type NestMiddleware } from '@nestjs/common'
 import type { NextFunction, Request, Response } from 'express'
 
-import { HttpReqHeader } from '@shared/core/http/interface'
+import { HttpReqHeader } from '@shared/core/httpClient/interface'
 import getTokenFromHeader from '@shared/utils/overWriteHeader'
 
 @Injectable()

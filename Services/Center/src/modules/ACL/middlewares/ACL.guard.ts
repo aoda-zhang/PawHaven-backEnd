@@ -9,7 +9,7 @@ import { Reflector } from '@nestjs/core'
 
 import ACLService from '@modules/ACL/ACLs.service'
 import { Decorators } from '@shared/constants/enum'
-import { HttpBusinessCode, HttpBusinessMappingCode } from '@shared/core/http/interface'
+import { HttpBusinessCode, HttpBusinessMappingCode } from '@shared/core/httpClient/interface'
 import trime from '@shared/utils/trime'
 
 @Injectable()

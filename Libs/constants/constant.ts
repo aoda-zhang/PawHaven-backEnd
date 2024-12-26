@@ -5,8 +5,13 @@ export const EnvConstant = {
     prod: 'PROD'
 }
 
-export const DBNames = {
-    DB_TRIP: 'DB_TRIP',
-    DB_CENTER: 'DB_CENTER',
-    DB_DOCUMENT: 'DB_DOCUMENT'
+export const MicroServiceNames = {
+    trip: 'trip',
+    document: 'document',
+    auth: 'auth'
+}
+
+export const ConfigKeys = {
+    DBConnections: 'DBConnections',
+    MicroServiceConnections: 'MicroServiceConnections'
 }

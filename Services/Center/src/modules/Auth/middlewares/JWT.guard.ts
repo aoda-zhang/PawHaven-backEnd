@@ -8,7 +8,7 @@ import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
-} from '@shared/core/http/interface'
+} from '@shared/core/httpClient/interface'
 import trime from '@shared/utils/trime'
 
 @Injectable()

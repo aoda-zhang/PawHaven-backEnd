@@ -2,19 +2,22 @@ import { DynamicModule, Module } from '@nestjs/common'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import ConfigsModule from './core/configModule/configs.module'
 import DatabaseModule from './core/dataBase/db.module'
-import HttpExceptionFilter from './core/http/httpExceptionFilter'
-import HttpInterceptor from './core/http/httpInterceptor'
-import MiddlewareModule from './core/middlewares/index.module'
+import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
+import HttpInterceptor from './core/httpClient/httpInterceptor'
 import SpeedlimitModule from './core/speedlimit/speedlimit.module'
+import MiddlewareModule from './middlewares/index.module'
 
 interface SharedModuleOptions {
     // the env config file path, e.g.
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
+    // the config values from config file
+    configValues?: Record<string, any>
     // the DB connection key in configs, multiple DB is support
-    DBConnectKeys: string[]
-    isIntergrateSpeedLimit?: boolean
+    DBConnectKey?: string
+    // the speed limit key in configs
+    limitKey: string
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
     isIntergrateHttpExceptionFilter?: boolean
@@ -24,8 +27,9 @@ class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
         const {
             configFilePath,
-            DBConnectKeys,
-            isIntergrateSpeedLimit = true,
+            configValues,
+            DBConnectKey,
+            limitKey,
             isIntergrateMiddware = true,
             isIntergrateHttpExceptionFilter = true,
             isIntergrateHttpInterceptor = true
@@ -36,12 +40,13 @@ class SharedModule {
             if (configFilePath) {
                 imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
-            if (DBConnectKeys) {
-                imports = [...imports, DatabaseModule.forRoot(DBConnectKeys)]
+            // dynamic db connection
+            imports = [...imports, DatabaseModule.forRoot({ DBConnectKey, configValues })]
+            // speed limit
+            if (limitKey) {
+                imports = [...imports, SpeedlimitModule.forRoot(limitKey)]
             }
-            if (isIntergrateSpeedLimit) {
-                imports = [...imports, SpeedlimitModule]
-            }
+            // middleware
             if (isIntergrateMiddware) {
                 imports = [...imports, MiddlewareModule]
             }
@@ -75,7 +80,7 @@ class SharedModule {
         }
         return {
             module: SharedModule,
-            imports: getImports(),
+            imports: [ConfigsModule, ...(getImports() ?? [])],
             providers: getProviders()
         }
     }

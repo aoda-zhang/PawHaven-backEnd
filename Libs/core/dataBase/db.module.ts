@@ -1,42 +1,46 @@
 import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { MongooseModule } from '@nestjs/mongoose'
-import { DBNames } from '@shared/constants/constant'
-
+import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose'
+import { ConfigKeys } from '@shared/constants/constant'
 @Module({})
 class DatabaseModule {
     /**
      * dynamic Mongoose connection
-     * @param dbConnectionKeys db connection keys from config
+     * @param DBConnectKey db connection key from config
+     * @param configValues All the config values from config file
      */
-    static forRoot(dbConnectionKeys: string[]): DynamicModule {
-        const isMultipleDB = dbConnectionKeys?.length > 1
-        const connectionProviders = dbConnectionKeys?.map((key) => ({
-            connectionName: DBNames?.[key],
-            imports: [ConfigModule],
-            useFactory: async (configService: ConfigService) => {
-                const dbConnection = configService.get<Record<string, any>>(key)
-                if (!dbConnection) {
-                    throw new Error(`Database connection string for key "${key}" not found.`)
+    static forRoot({
+        DBConnectKey,
+        configValues
+    }: { DBConnectKey: string; configValues: Record<string, any> }): DynamicModule {
+        try {
+            const availableDBConnections = configValues?.[DBConnectKey ?? ConfigKeys.DBConnections]
+                ?.filter((item) => item?.enable)
+                ?.map((item) => item?.options)
+            const isMultipleDB = availableDBConnections?.length > 1
+            const connectionProviders = availableDBConnections?.map((DBItem) => ({
+                connectionName: DBItem,
+                useFactory: () => {
+                    return { ...(DBItem ?? {}) }
                 }
-                return { ...dbConnection }
-            },
-            inject: [ConfigService]
-        }))
+            }))
 
-        const DBConnection = connectionProviders.map((provider) =>
-            MongooseModule.forRootAsync({
-                // Must clearfy each DB name if there is multiple DB connections
-                connectionName: isMultipleDB ? provider?.connectionName : null,
-                useFactory: provider.useFactory,
-                inject: provider.inject
-            })
-        )
+            const DBConnection = connectionProviders.map((provider) =>
+                MongooseModule.forRootAsync({
+                    // Must clearfy each DB name if there is multiple DB connections
+                    connectionName: isMultipleDB ? provider?.connectionName : null,
+                    useFactory: provider.useFactory,
+                    inject: provider.inject
+                })
+            )
 
-        return {
-            module: DatabaseModule,
-            imports: [ConfigModule, ...DBConnection],
-            exports: [...DBConnection]
+            return {
+                module: DatabaseModule,
+                imports: [ConfigModule, ...DBConnection],
+                exports: [...DBConnection]
+            }
+        } catch (error) {
+            throw new Error(`DB connection error :${error}`)
         }
     }
 }
