@@ -4,20 +4,20 @@ import ConfigsModule from './core/configModule/configs.module'
 import DatabaseModule from './core/dataBase/db.module'
 import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
 import HttpInterceptor from './core/httpClient/httpInterceptor'
+import MSClientModule from './core/microServiceClient/msClient.module'
 import SpeedlimitModule from './core/speedlimit/speedlimit.module'
 import MiddlewareModule from './middlewares/index.module'
-
 interface SharedModuleOptions {
     // the env config file path, e.g.
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
     // the config values from config file
-    configValues?: Record<string, any>
-    // the DB connection key in configs, multiple DB is support
-    DBConnectKey?: string
+    configValues: Record<string, any>
     // the speed limit key in configs
     limitKey: string
+    // the microservice names to register
+    microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
     isIntergrateHttpExceptionFilter?: boolean
@@ -28,11 +28,11 @@ class SharedModule {
         const {
             configFilePath,
             configValues,
-            DBConnectKey,
             limitKey,
             isIntergrateMiddware = true,
             isIntergrateHttpExceptionFilter = true,
-            isIntergrateHttpInterceptor = true
+            isIntergrateHttpInterceptor = true,
+            microServiceNames = []
         } = options
 
         const getImports = () => {
@@ -41,7 +41,7 @@ class SharedModule {
                 imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
             // dynamic db connection
-            imports = [...imports, DatabaseModule.forRoot({ DBConnectKey, configValues })]
+            imports = [...imports, DatabaseModule.forRoot({ configValues })]
             // speed limit
             if (limitKey) {
                 imports = [...imports, SpeedlimitModule.forRoot(limitKey)]
@@ -50,6 +50,12 @@ class SharedModule {
             if (isIntergrateMiddware) {
                 imports = [...imports, MiddlewareModule]
             }
+
+            // microservice register
+            if (microServiceNames?.length > 0) {
+                imports = [...imports, MSClientModule.register(microServiceNames)]
+            }
+
             return imports
         }
 

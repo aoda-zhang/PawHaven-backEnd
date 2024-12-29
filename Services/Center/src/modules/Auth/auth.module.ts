@@ -5,8 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose'
 
 import ACLModule from '@modules/ACL/ACLs.module'
 import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
-import HMACGuard from '@modules/Auth/middlewares/HMAC.guard'
 import JWTGuard from '@modules/Auth/middlewares/JWT.guard'
+import SignGuard from '@modules/Auth/middlewares/Sign.guard'
 import UserModule from '@modules/User/user.module'
 
 import CommonDBCollections from '@shared/models/common.DBcollection'
@@ -28,7 +28,7 @@ import { EncryptService } from './encrypt.service'
         EncryptService,
         {
             provide: APP_GUARD,
-            useClass: HMACGuard
+            useClass: SignGuard
         },
         {
             provide: APP_GUARD,

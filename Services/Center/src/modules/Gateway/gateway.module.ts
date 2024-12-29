@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common'
-import HttpClientModule from '@shared/core/httpClient/httpClient.module'
-import GatewayController from './gateway.controller'
-import GatewayService from './gateway.service'
+import MS_DocumentController from './Document/document.controller'
+import MS_TripController from './Trip/trip.controller'
 @Module({
-    imports: [HttpClientModule],
-    controllers: [GatewayController],
-    providers: [GatewayService]
+    imports: [],
+    controllers: [MS_TripController, MS_DocumentController],
+    providers: []
 })
 export class GatewayModule {}

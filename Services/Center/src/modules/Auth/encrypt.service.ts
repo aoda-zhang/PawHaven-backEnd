@@ -6,12 +6,12 @@ import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(utc)
 
-export type HMACParams = {
+export type SignParams = {
     request: Record<string, any>
     clientTimestamp: string
 }
-export type CompareHMACParams = HMACParams & {
-    clientHMAC: string
+export type CompareSignParams = SignParams & {
+    clientSign: string
 }
 
 @Injectable()
@@ -43,7 +43,7 @@ export class EncryptService {
             ?.toLowerCase()
     }
 
-    private generateHMAC = ({ request, clientTimestamp }: HMACParams): string => {
+    private generateSign = ({ request, clientTimestamp }: SignParams): string => {
         const { body, url = '', method = '' } = request
         const requestBody = Object.keys(body ?? {})?.length > 0 ? JSON.stringify(request?.body) : ''
         return CryptoJS.HmacSHA256(
@@ -52,7 +52,7 @@ export class EncryptService {
         ).toString(CryptoJS.enc.Hex)
     }
 
-    compareHMAC = ({ clientHMAC, request, clientTimestamp }: CompareHMACParams): boolean => {
-        return clientHMAC === this.generateHMAC({ request, clientTimestamp })
+    compareSign = ({ clientSign, request, clientTimestamp }: CompareSignParams): boolean => {
+        return clientSign === this.generateSign({ request, clientTimestamp })
     }
 }

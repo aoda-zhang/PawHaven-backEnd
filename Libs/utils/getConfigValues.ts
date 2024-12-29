@@ -1,13 +1,29 @@
 import { readFileSync } from 'node:fs'
 import * as yaml from 'js-yaml'
+
+// environment constants
+export const EnvConstant = {
+    dev: 'DEV',
+    uat: 'UAT',
+    test: 'TEST',
+    prod: 'PROD'
+}
+
+const isConfigAvaliable = (configFilePath: string) => {
+    const avaliabEnvs = Object.values(EnvConstant)
+    const configContent = readFileSync(configFilePath, 'utf8')
+    const isAvaliable =
+        avaliabEnvs.some((env) => configFilePath?.includes(env)) &&
+        Object.keys(configContent)?.length > 0
+    return isAvaliable
+}
+
 const getConfigValues = (configFilePath: string) => {
     try {
-        const yamlContent = readFileSync(configFilePath, 'utf8')
-        if (Object.keys(yamlContent)?.length > 0) {
+        if (isConfigAvaliable(configFilePath)) {
             return yaml.load(readFileSync(configFilePath, 'utf8')) as Record<string, any>
         }
-        console.error('No config file exist！！！')
-        return {}
+        throw new Error('No config file exist！！！')
     } catch (error) {
         console.error(`get config value error: ${error}`)
         return {}

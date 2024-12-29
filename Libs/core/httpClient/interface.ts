@@ -11,7 +11,7 @@ export enum HttpBusinessCode {
 }
 export enum HttpReqHeader {
     timestamp = 'x-timestamp',
-    apiKey = 'x-api-key',
+    sign = 'x-sign',
     traceID = 'traceID',
     accessToken = 'access-token',
     locale = 'locale'

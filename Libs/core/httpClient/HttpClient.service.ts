@@ -7,8 +7,6 @@ export default class HttpClientService {
     constructor(private readonly httpService: HttpService) {}
 
     async get(url: string, data: any = {}, customConfig: AxiosRequestConfig = {}) {
-        // 根据 url拿到所有的 domain
-        // 判断服务是否上线
         return this.httpService.get(url, { params: data, ...customConfig })
     }
 

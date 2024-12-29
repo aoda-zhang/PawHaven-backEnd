@@ -11,7 +11,7 @@ export enum UserRole {
 }
 
 export enum Decorators {
-    noHMAC = 'noHMAC',
+    noSign = 'noSign',
     noToken = 'noToken',
     ACLPermissions = 'ACLPermissions'
 }

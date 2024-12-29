@@ -11,7 +11,7 @@ import trime from '@shared/utils/trime'
 import { EncryptService } from '../encrypt.service'
 
 @Injectable()
-export default class HMACGuard implements CanActivate {
+export default class SignGuard implements CanActivate {
     constructor(
         private reflector: Reflector,
         private configService: ConfigService,
@@ -21,29 +21,29 @@ export default class HMACGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest()
         const response = context.switchToHttp().getResponse()
-        const isNoHMACReq = this.reflector.getAllAndOverride<boolean>(Decorators.noHMAC, [
+        const isNoSignReq = this.reflector.getAllAndOverride<boolean>(Decorators.noSign, [
             context.getHandler(),
             context.getClass()
         ])
 
         try {
-            // skip verify HMAC if isNoHMACReq route or NO enable HMAC
-            if (!this.configService.get('auth.enableHMAC') || isNoHMACReq) {
+            // skip verify Sign if isNoSignReq route or NO enable Sign
+            if (!this.configService.get('auth.enableSign') || isNoSignReq) {
                 return true
             }
             const clientTimestamp = `${request?.headers?.[HttpReqHeader?.timestamp] ?? ''}`
-            const clientHMAC = request?.headers?.[HttpReqHeader?.apiKey]
+            const clientSign = request?.headers?.[HttpReqHeader?.sign]
 
             // verify timestamp
             const isTimestampAvailable = this.encryptService.isTimestampAvailable(clientTimestamp)
 
-            // verify HMAC
-            const isPassedHMAC = this.encryptService.compareHMAC({
+            // verify Sign
+            const isPassedSign = this.encryptService.compareSign({
                 request,
                 clientTimestamp,
-                clientHMAC
+                clientSign
             })
-            return isTimestampAvailable && isPassedHMAC
+            return isTimestampAvailable && isPassedSign
         } catch (error) {
             switch (trime(error?.message)) {
                 // 根据不同的错误情况，设置特定的业务code，方便前端做对应处理
