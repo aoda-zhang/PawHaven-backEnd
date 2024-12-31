@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common'
+import { DynamicModule, Global, Module } from '@nestjs/common'
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import ConfigsModule from './core/configModule/configs.module'
 import DatabaseModule from './core/dataBase/db.module'
@@ -15,13 +15,14 @@ interface SharedModuleOptions {
     // the config values from config file
     configValues: Record<string, any>
     // the speed limit key in configs
-    limitKey: string
+    limitKey?: string
     // the microservice names to register
     microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
     isIntergrateHttpExceptionFilter?: boolean
 }
+@Global()
 @Module({})
 class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
@@ -30,8 +31,8 @@ class SharedModule {
             configValues,
             limitKey,
             isIntergrateMiddware = true,
-            isIntergrateHttpExceptionFilter = true,
-            isIntergrateHttpInterceptor = true,
+            isIntergrateHttpExceptionFilter = false,
+            isIntergrateHttpInterceptor = false,
             microServiceNames = []
         } = options
 
@@ -86,7 +87,7 @@ class SharedModule {
         }
         return {
             module: SharedModule,
-            imports: [ConfigsModule, ...(getImports() ?? [])],
+            imports: [...(getImports() ?? [])],
             providers: getProviders()
         }
     }

@@ -1,7 +1,7 @@
 import path from 'node:path'
 import ACLModule from '@modules/ACL/ACLs.module'
 import AuthModule from '@modules/Auth/auth.module'
-import { GatewayModule } from '@modules/Gateway/gateway.module'
+import { TripModule } from '@modules/Trip/trip.module'
 import { Module } from '@nestjs/common'
 import { MSClientNames } from '@shared/constants/constant'
 import SharedModule from '@shared/shared.module'
@@ -16,13 +16,16 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
             configValues: getConfigValues(configFilePath),
             configFilePath,
             limitKey: 'limitation',
-            microServiceNames: [MSClientNames.MS_TRIP, MSClientNames.MS_DOCUMENT]
+            microServiceNames: [MSClientNames.MS_TRIP],
+            isIntergrateHttpExceptionFilter: true,
+            isIntergrateHttpInterceptor: true
         }),
-        GatewayModule,
-        UserModule
+        TripModule
+        // UserModule
         // AuthModule,
         // ACLModule
     ],
+    controllers: [],
     providers: []
 })
 export class AppModule {}

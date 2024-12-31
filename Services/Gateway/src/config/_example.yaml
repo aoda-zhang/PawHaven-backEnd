@@ -1,0 +1,56 @@
+http:
+  env: uat
+  port: 8080
+  prefix: api/v1
+swagger:
+  title: 管理后台
+  version: 1.0
+  prefix: api-docs
+  description: 管理后台接口文档
+DBConnections:
+  [
+    {
+      enable: true,
+      options:
+        {
+          name: DB_TRIP,
+          uri: ****************,
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        },
+    },
+  ]
+MicroServices:
+  [
+    {
+      name: MS_TRIP,
+      enable: true,
+      transport: TCP,
+      options: { host: localhost, port: 4000 },
+      serviceID: ****************,
+    },
+  ]
+cors:
+  allowedHeaders:
+    [X-timestamp, Access-Token, Accept, Content-Type, X-Sign, Locale]
+  origins:
+    [
+      http://localhost:3001
+    ]
+  optionsSuccessStatus: 200
+  methods: [GET, POST, PUT, OPTIONS, HEAD, PATCH]
+limitation:
+  ttl: 60
+  limit: 1000
+auth:
+  secret: ****************
+  ttl: 4h
+  refreshSecret: ****************
+  refreshTTL: 3d
+  saltRounds: 10
+  privateKey: ****************
+  requestGap: 120
+  enableHMAC: false
+  rootUser: ****************
+ping:
+  url: /api/v1/checker/ping

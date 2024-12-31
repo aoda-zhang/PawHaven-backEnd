@@ -45,7 +45,7 @@ build
 # config
 **/**/src/config/**
 !**/**/src/config/index.ts
-
+!**/**/src/config/_example.yaml
 
 # local logs
 logs/*

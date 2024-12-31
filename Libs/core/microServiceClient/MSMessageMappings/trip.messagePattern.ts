@@ -1,4 +1,4 @@
-import { MSMessagePatternType, MicroServiceNames, Versions } from '@shared/constants/constant'
+import { MicroServiceNames, Versions } from '@shared/constants/constant'
 
 /*
 // Please define the message pattern by the following format:
@@ -8,9 +8,9 @@ import { MSMessagePatternType, MicroServiceNames, Versions } from '@shared/const
     Example:
     GET_TRIP_LIST: `${MicroServiceNames.TRIP}.getTripList.${Versions.v1}`
 */
-
-const TRIP_MESSAGE_PATTERN: MSMessagePatternType = {
-    GET_TRIP_LIST1: `${MicroServiceNames.TRIP}.getTripList.${Versions.v1}`
+const TRIP_MESSAGE_PATTERN = {
+    GET_TRIP_LIST1: `${MicroServiceNames.TRIP}.getTripList.${Versions.v1}`,
+    GET_TRIP_LIST2: `${MicroServiceNames.TRIP}.getTripList.${Versions.v2}`,
+    CREATE_TRIP: `${MicroServiceNames.TRIP}.createTrip.${Versions.v1}`
 }
-
 export default TRIP_MESSAGE_PATTERN

@@ -9,8 +9,7 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
     imports: [
         SharedModule.forRoot({
             configFilePath,
-            configValues: getConfigValues(configFilePath),
-            limitKey: 'limitation'
+            configValues: getConfigValues(configFilePath)
         }),
         TripModule
     ],

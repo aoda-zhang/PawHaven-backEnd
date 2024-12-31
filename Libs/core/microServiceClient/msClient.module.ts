@@ -1,7 +1,8 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { ClientsModule } from '@nestjs/microservices'
+import { ClientsModule, Transport } from '@nestjs/microservices'
 import { ConfigKeys, MSClientNames } from '@shared/constants/constant'
+import getTransport from '@shared/utils/getTransport'
 
 @Global()
 @Module({})
@@ -27,15 +28,13 @@ class MSClientModule {
                         useFactory: (configService: ConfigService) => {
                             const serviceOption = configService
                                 .get(ConfigKeys.MicroServices)
-                                ?.find((service) => service.name === name)
-                            const isServiceEnable = serviceOption?.enable
-                            if (isServiceEnable) {
-                                return {
-                                    transport: serviceOption?.transport,
-                                    options: serviceOption?.options
-                                }
-                            }
-                            return {}
+                                ?.find((service) => service?.name === name && service?.enable)
+                            return serviceOption
+                                ? {
+                                      transport: getTransport(serviceOption?.transport),
+                                      options: serviceOption?.options
+                                  }
+                                : {}
                         },
                         inject: [ConfigService]
                     }

@@ -1,5 +1,3 @@
-import createMSName from '@shared/utils/createMSName'
-
 export const MicroServiceNames = {
     TRIP: 'trip',
     DOCUMENT: 'document',
@@ -8,9 +6,9 @@ export const MicroServiceNames = {
 
 // microservice names when using microservice client
 export const MSClientNames = {
-    [createMSName(MicroServiceNames.TRIP)]: createMSName(MicroServiceNames.TRIP),
-    [createMSName(MicroServiceNames.DOCUMENT)]: createMSName(MicroServiceNames.DOCUMENT),
-    [createMSName(MicroServiceNames.AUTH)]: createMSName(MicroServiceNames.AUTH)
+    MS_TRIP: 'MS_TRIP',
+    MS_DOCUMENT: 'MS_DOCUMENT',
+    MS_AUTH: 'MS_AUTH'
 }
 
 // config keys from env config file

@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common'
-import { MessagePattern } from '@nestjs/microservices'
+import { MessagePattern, Payload, Transport } from '@nestjs/microservices'
 import { MicroServiceNames } from '@shared/constants/constant'
 import TRIP_MESSAGE_PATTERN from '@shared/core/microServiceClient/MSMessageMappings/trip.messagePattern'
 import { TripService } from './trip.service'
@@ -8,8 +8,13 @@ import { TripService } from './trip.service'
 export class TripController {
     constructor(private readonly tripService: TripService) {}
 
-    @MessagePattern(TRIP_MESSAGE_PATTERN.GET_TRIP)
-    getTrip() {
-        return '123'
+    @MessagePattern(TRIP_MESSAGE_PATTERN.GET_TRIP_LIST1)
+    getTrip(@Payload() payload: Record<string, any>) {
+        return this.tripService.getTripInfo(payload)
+    }
+
+    @MessagePattern(TRIP_MESSAGE_PATTERN.CREATE_TRIP)
+    createTrip(@Payload() payload: Record<string, any>) {
+        return this.tripService.createTrip(payload)
     }
 }

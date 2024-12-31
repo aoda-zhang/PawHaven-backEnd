@@ -1,4 +1,4 @@
-import { MSMessagePatternType, MicroServiceNames, Versions } from '@shared/constants/constant'
+import { MicroServiceNames, Versions } from '@shared/constants/constant'
 /*
 // Please define the message pattern by the following format:
 // 1: microservice name
@@ -8,7 +8,7 @@ import { MSMessagePatternType, MicroServiceNames, Versions } from '@shared/const
     GET_DOCUMENT_LIST: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`
 */
 
-const DOCUMENT_MESSAGE_PATTERN: MSMessagePatternType = {
+const DOCUMENT_MESSAGE_PATTERN = {
     GET_DOCUMENT_LIST1: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`
 }
 
