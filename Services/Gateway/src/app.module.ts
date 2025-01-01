@@ -3,7 +3,9 @@ import ACLModule from '@modules/ACL/ACLs.module'
 import AuthModule from '@modules/Auth/auth.module'
 import { TripModule } from '@modules/Trip/trip.module'
 import { Module } from '@nestjs/common'
+import { APP_GUARD } from '@nestjs/core'
 import { MSClientNames } from '@shared/constants/constant'
+import SignGuard from '@shared/guards/Sign.guard'
 import SharedModule from '@shared/shared.module'
 import getConfigValues, { EnvConstant } from '@shared/utils/getConfigValues'
 import UserModule from './modules/User/user.module'
@@ -26,6 +28,11 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
         // ACLModule
     ],
     controllers: [],
-    providers: []
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: SignGuard
+        }
+    ]
 })
 export class AppModule {}

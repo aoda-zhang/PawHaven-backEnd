@@ -3,7 +3,6 @@ import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { EnvConstant } from '@shared/utils/getConfigValues'
-import getTransport from '@shared/utils/getTransport'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 const currentENV = process.env.NODE_ENV
@@ -16,7 +15,7 @@ async function bootstrap() {
 
     app.connectMicroservice(
         {
-            transport: getTransport(microServiceOption?.transport),
+            transport: microServiceOption?.transport ?? 0,
             options: {
                 host: microServiceOption?.host,
                 port: microServiceOption?.port

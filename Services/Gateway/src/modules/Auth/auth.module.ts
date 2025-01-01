@@ -6,14 +6,13 @@ import { MongooseModule } from '@nestjs/mongoose'
 import ACLModule from '@modules/ACL/ACLs.module'
 import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
 import JWTGuard from '@modules/Auth/middlewares/JWT.guard'
-import SignGuard from '@modules/Auth/middlewares/Sign.guard'
 import UserModule from '@modules/User/user.module'
+import SignGuard from '@shared/guards/Sign.guard'
 
 import CommonDBCollections from '@shared/models/common.DBcollection'
 import { UserSchema } from '@shared/models/user.schema'
 import { AuthController } from './auth.controller'
 import AuthService from './auth.service'
-import { EncryptService } from './encrypt.service'
 
 @Module({
     imports: [
@@ -25,11 +24,6 @@ import { EncryptService } from './encrypt.service'
     controllers: [AuthController],
     providers: [
         AuthService,
-        EncryptService,
-        {
-            provide: APP_GUARD,
-            useClass: SignGuard
-        },
         {
             provide: APP_GUARD,
             useClass: JWTGuard
@@ -39,6 +33,6 @@ import { EncryptService } from './encrypt.service'
             useClass: ACLGuard
         }
     ],
-    exports: [AuthService, EncryptService]
+    exports: [AuthService]
 })
 export default class AuthModule {}
