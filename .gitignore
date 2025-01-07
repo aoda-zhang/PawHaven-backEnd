@@ -52,3 +52,4 @@ logs/*
 *.env
 .DS_Store
 .yarn/install-state.gz
+.biome.json

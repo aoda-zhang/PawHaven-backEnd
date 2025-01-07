@@ -54,10 +54,10 @@ async function bootstrap() {
         .listen(port, () => {
             // eslint-disable-next-line no-unused-expressions
             ;[EnvConstant.dev, EnvConstant.uat].includes(currentENV?.toUpperCase()) &&
-                console.log(`Running on local:  http://localhost:${port}`)
+                console.log(`MS_Document Running on local:  http://localhost:${port}`)
         })
         .catch((error) => {
-            console.error(`应用启动异常:${error}`)
+            console.error(`MS_Document start error:${error}`)
         })
 }
 bootstrap()

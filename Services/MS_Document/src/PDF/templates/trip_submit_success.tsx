@@ -1,25 +1,31 @@
 import * as React from "react";
+import styled from "styled-components";
+const Title = styled.div`
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const ContentItem = styled.div`
+  margin-right: 20px;
+`;
 
 interface Props {
   title: string;
-  content: string;
+  content: { name: string; value: string }[];
 }
-
-export const TripSubmitSuccessPDFOptions = {
-  pageSize: "A4",
-  pageMargins: {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
+const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => {
+  return (
+    <>
+      <Title>{title}</Title>
+      {content?.map((item, index) => (
+        <ContentItem key={index}>
+          <span>{item?.name}</span>
+          <span>{item.value}</span>
+        </ContentItem>
+      ))}
+    </>
+  );
 };
-
-const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => (
-  <div>
-    <h1>{title}</h1>
-    <p>{content}</p>
-  </div>
-);
 
 export default TripSubmitSuccess;
