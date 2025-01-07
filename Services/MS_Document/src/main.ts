@@ -1,21 +1,31 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common'
-import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import initSwagger from '@shared/core/swagger'
 import helmet from 'helmet'
-import AppModule from './app.module'
+import { AppModule } from './app.module'
+import { EnvConstant } from '@shared/constants/constant'
 
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
-    // 业务service建议express
-    // gateway 建议fastiy
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: true
     })
-    const corsOptions: CorsOptions = app.get(ConfigService).get('cors')
-    app.enableCors(corsOptions)
+    const microServiceOption = app.get(ConfigService).get('microService')
+
+    app.connectMicroservice(
+        {
+            transport: microServiceOption?.transport ?? 0,
+            options: {
+                host: microServiceOption?.host,
+                port: microServiceOption?.port
+            }
+        },
+        // Apply the main app config to the microservice
+        { inheritAppConfig: true }
+    )
+
+    await app.startAllMicroservices()
 
     // app.useLogger(app.get(Logger))
 
@@ -35,7 +45,6 @@ async function bootstrap() {
             whitelist: true
         })
     )
-    await initSwagger(app)
 
     // avoid attack
     app.use(helmet())
@@ -44,7 +53,8 @@ async function bootstrap() {
     await app
         .listen(port, () => {
             // eslint-disable-next-line no-unused-expressions
-            currentENV === 'uat' && console.log(`本地开发运行在 http://localhost:${port}`)
+            ;[EnvConstant.dev, EnvConstant.uat].includes(currentENV?.toUpperCase()) &&
+                console.log(`Running on local:  http://localhost:${port}`)
         })
         .catch((error) => {
             console.error(`应用启动异常:${error}`)

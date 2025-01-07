@@ -1,20 +1,15 @@
-import { Body, Controller, Post, Res } from '@nestjs/common'
-import { Response } from 'express'
+import { Controller } from '@nestjs/common'
 import CreatePDFDTO from './DTO/create-PDF.DTO'
-import PDFService from './PDF.service'
+import { MessagePattern, Payload } from '@nestjs/microservices'
+import documentMessagePattern from '@shared/constants/MSMessagePatterns/document.messagePattern'
+import { PDFService } from './PDF.service'
 
-@Controller('PDF')
+@Controller('pdf')
 export default class PDFController {
     constructor(private readonly pdfService: PDFService) {}
 
-    @Post('create')
-    async generatePdf(@Body() generatePdfDto: CreatePDFDTO, @Res() res: Response) {
-        const { template, PDFData } = generatePdfDto
-        const pdfPath = await this.pdfService.generatePDF(template, PDFData)
-        res.download(pdfPath, (err) => {
-            if (err) {
-                console.error('Error sending PDF file:', err)
-            }
-        })
+    @MessagePattern(documentMessagePattern.GET_DOCUMENT_BY_ID)
+    async generatePdf(@Payload() payload: CreatePDFDTO) {
+        return await this.pdfService.generatePdf(payload.template, payload.PDFData)
     }
 }

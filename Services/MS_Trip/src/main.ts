@@ -2,9 +2,10 @@ import { ValidationPipe, VersioningType } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { EnvConstant } from '@shared/utils/getConfigValues'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
+import { EnvConstant } from '@shared/constants/constant'
+
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -21,6 +22,7 @@ async function bootstrap() {
                 port: microServiceOption?.port
             }
         },
+        // Apply the main app config to the microservice
         { inheritAppConfig: true }
     )
 

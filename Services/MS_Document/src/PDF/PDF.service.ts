@@ -1,27 +1,34 @@
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import { Injectable, InternalServerErrorException } from '@nestjs/common'
-import { renderToStream } from '@react-pdf/renderer'
+import { Injectable } from '@nestjs/common'
+import * as React from 'react'
+import * as ReactDOMServer from 'react-dom/server'
+import puppeteer from 'puppeteer'
 
 @Injectable()
-export default class PDFService {
-    async generatePDF(template: string, PDFCpntent: Record<string, any>): Promise<string> {
+export class PDFService {
+    getPDFHtmlContent(templateName: string, props: Record<string, any>) {
         try {
-            const { default: PDFTemplate } = await import(`./templates/${template}`)
-            const PDFStream = await renderToStream(PDFTemplate(PDFCpntent))
-
-            // 保存 PDF 到文件系统
-            const outputPath = path.join(__dirname, `../../../pdfs/${template}-${Date.now()}.pdf`)
-            const writeStream = fs.createWriteStream(outputPath)
-            PDFStream.pipe(writeStream)
-            await new Promise((resolve, reject) => {
-                writeStream.on('finish', resolve)
-                writeStream.on('error', reject)
-            })
-            return outputPath
+            const { default: TemplateComponent } = require(`./templates/${templateName}`)
+            return ReactDOMServer.renderToStaticMarkup(
+                React.createElement(TemplateComponent, props)
+            )
         } catch (error) {
-            console.error('Error generating PDF:', error)
-            throw new InternalServerErrorException('Failed to generate PDF')
+            console.error(error)
+            throw new Error(`get the ${templateName} with error: ${error}`)
+        }
+    }
+
+    async generatePDF(templateName: string, props: Record<string, any>) {
+        try {
+            const browser = await puppeteer.launch()
+            const page = await browser.newPage()
+            const htmlContent = await this.getPDFHtmlContent(templateName, props)
+            await page.setContent(htmlContent, { waitUntil: 'networkidle0' })
+            const PDFBuffer = (await page.pdf({ format: 'A4' })).buffer
+            await browser.close()
+            return Buffer.from(PDFBuffer)
+        } catch (error) {
+            console.error(error)
+            throw new Error(`${templateName} generate PDF with error: ${error}`)
         }
     }
 }

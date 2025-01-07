@@ -2,14 +2,16 @@ import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigKeys } from '@shared/constants/constant'
+import getConfigValues from '@shared/utils/getConfigValues'
 @Module({})
 class DatabaseModule {
     /**
      * dynamic Mongoose connection
-     * @param configValues All the config values from config file
+     * @param dbConnectKeys the keys of the db connections in the config file
      */
-    static forRoot({ configValues }: { configValues: Record<string, any> }): DynamicModule {
+    static forRoot(configFilePath: string): DynamicModule {
         try {
+            const configValues = getConfigValues(configFilePath)
             const availableDBConnections = configValues?.[ConfigKeys.DBConnections]
                 ?.filter((item) => item?.enable)
                 ?.map((item) => item?.options)

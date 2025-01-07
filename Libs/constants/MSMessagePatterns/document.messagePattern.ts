@@ -8,8 +8,10 @@ import { MicroServiceNames, Versions } from '@shared/constants/constant'
     GET_DOCUMENT_LIST: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`
 */
 
-const DOCUMENT_MESSAGE_PATTERN = {
-    GET_DOCUMENT_LIST1: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`
+const DocumentMessagePattern = {
+    GET_DOCUMENT_LIST1: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`,
+    GET_DOCUMENT_BY_ID: `${MicroServiceNames.DOCUMENT}.getDocumentById.${Versions.v1}`,
+    GENERATE_PDF: `${MicroServiceNames.DOCUMENT}.generatePdf.${Versions.v1}`
 }
 
-export default DOCUMENT_MESSAGE_PATTERN
+export default DocumentMessagePattern

@@ -4,28 +4,26 @@ import AuthModule from '@modules/Auth/auth.module'
 import { TripModule } from '@modules/Trip/trip.module'
 import { Module } from '@nestjs/common'
 import { APP_GUARD } from '@nestjs/core'
-import { MSClientNames } from '@shared/constants/constant'
 import SignGuard from '@shared/guards/Sign.guard'
 import SharedModule from '@shared/shared.module'
-import getConfigValues, { EnvConstant } from '@shared/utils/getConfigValues'
-import UserModule from './modules/User/user.module'
+import { DocumentModule } from '@modules/Document/document.module'
+import { EnvConstant } from '@shared/constants/constant'
 const currentEnv = process.env.NODE_ENV ?? 'uat'
 const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
 
 @Module({
     imports: [
         SharedModule.forRoot({
-            configValues: getConfigValues(configFilePath),
             configFilePath,
             limitKey: 'limitation',
-            microServiceNames: [MSClientNames.MS_TRIP],
             isIntergrateHttpExceptionFilter: true,
             isIntergrateHttpInterceptor: true
         }),
-        TripModule
-        // UserModule
+        TripModule,
+        DocumentModule
+        // UserModule,
         // AuthModule,
-        // ACLModule
+        // ACLModule,
     ],
     controllers: [],
     providers: [

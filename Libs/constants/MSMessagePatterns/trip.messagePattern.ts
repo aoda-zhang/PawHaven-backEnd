@@ -8,9 +8,9 @@ import { MicroServiceNames, Versions } from '@shared/constants/constant'
     Example:
     GET_TRIP_LIST: `${MicroServiceNames.TRIP}.getTripList.${Versions.v1}`
 */
-const TRIP_MESSAGE_PATTERN = {
+const TripMessagePattern = {
     GET_TRIP_LIST1: `${MicroServiceNames.TRIP}.getTripList.${Versions.v1}`,
     GET_TRIP_LIST2: `${MicroServiceNames.TRIP}.getTripList.${Versions.v2}`,
     CREATE_TRIP: `${MicroServiceNames.TRIP}.createTrip.${Versions.v1}`
 }
-export default TRIP_MESSAGE_PATTERN
+export default TripMessagePattern

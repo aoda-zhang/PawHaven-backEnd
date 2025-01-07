@@ -1,55 +1,31 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule } from '@nestjs/microservices'
 import { ConfigKeys, MSClientNames } from '@shared/constants/constant'
+import getConfigValues from '@shared/utils/getConfigValues'
 
 @Global()
 @Module({})
 class MSClientModule {
-    static register(microServiceNames: string[]): DynamicModule {
-        const isServiceNameAvailable = (microServiceNames: string[]) => {
-            if (!microServiceNames) {
-                throw new Error('Microservice names are required')
-            }
-            return microServiceNames?.some((name) => {
-                if (!Object.values(MSClientNames)?.includes(name)) {
-                    throw new Error('Microservice name is not available')
-                }
-                return true
-            })
-        }
-        try {
-            if (isServiceNameAvailable(microServiceNames)) {
-                const microServices = microServiceNames?.map((name) => {
-                    return {
-                        name: name,
-                        imports: [ConfigModule],
-                        useFactory: (configService: ConfigService) => {
-                            const serviceOption = configService
-                                .get(ConfigKeys.MicroServices)
-                                ?.find((service) => service?.name === name && service?.enable)
-                            return serviceOption
-                                ? {
-                                      // More transport please refer to Transport
-                                      transport: serviceOption?.transport,
-                                      options: serviceOption?.options
-                                  }
-                                : {}
-                        },
-                        inject: [ConfigService]
-                    }
-                })
+    static register(configFilePath: string): DynamicModule {
+        const configValues = getConfigValues(configFilePath)
+        const availableMicroServices = configValues?.[ConfigKeys.MicroServices]?.filter(
+            (item) => item?.enable && MSClientNames?.[item?.name]
+        )
+        const isExistMicroService = availableMicroServices?.length > 0
+        const microServices =
+            isExistMicroService &&
+            availableMicroServices?.map((service) => ({
+                name: service?.name,
+                transport: service?.transport,
+                options: service?.options
+            }))
 
-                const miccoServiceClients = ClientsModule.registerAsync(microServices)
+        const microServiceClients = ClientsModule.register(microServices || [])
 
-                return {
-                    module: MSClientModule,
-                    imports: [miccoServiceClients],
-                    exports: [miccoServiceClients]
-                }
-            }
-        } catch (error) {
-            throw new Error(`Microservice registration failed with error: ${error}`)
+        return {
+            module: MSClientModule,
+            imports: isExistMicroService ? [microServiceClients] : [],
+            exports: isExistMicroService ? [microServiceClients] : []
         }
     }
 }

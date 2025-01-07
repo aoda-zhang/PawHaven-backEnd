@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import PDFController from './PDF.controller'
-import PDFService from './PDF.service'
+import { PDFService } from './PDF.service'
 
 @Module({
     // imports: [MongooseModule.forFeature([{ name: DBCollection.HISTORY, schema: HistorySchema }])],

@@ -12,11 +12,8 @@ interface SharedModuleOptions {
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
-    // the config values from config file
-    configValues: Record<string, any>
     // the speed limit key in configs
     limitKey?: string
-    // the microservice names to register
     microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
@@ -28,12 +25,11 @@ class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
         const {
             configFilePath,
-            configValues,
             limitKey,
+            microServiceNames,
             isIntergrateMiddware = true,
             isIntergrateHttpExceptionFilter = false,
-            isIntergrateHttpInterceptor = false,
-            microServiceNames = []
+            isIntergrateHttpInterceptor = false
         } = options
 
         const getImports = () => {
@@ -42,7 +38,8 @@ class SharedModule {
                 imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
             // dynamic db connection
-            imports = [...imports, DatabaseModule.forRoot({ configValues })]
+            imports = [...imports, DatabaseModule.forRoot(configFilePath)]
+
             // speed limit
             if (limitKey) {
                 imports = [...imports, SpeedlimitModule.forRoot(limitKey)]
@@ -52,10 +49,8 @@ class SharedModule {
                 imports = [...imports, MiddlewareModule]
             }
 
-            // microservice register
-            if (microServiceNames?.length > 0) {
-                imports = [...imports, MSClientModule.register(microServiceNames)]
-            }
+            // microservice register - support both approaches
+            imports = [...imports, MSClientModule.register(configFilePath)]
 
             return imports
         }

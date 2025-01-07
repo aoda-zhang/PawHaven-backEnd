@@ -7,7 +7,7 @@ import helmet from 'helmet'
 // import { Logger } from 'nestjs-pino'
 
 import initSwagger from '@shared/core/swagger'
-import { EnvConstant } from '@shared/utils/getConfigValues'
+import { EnvConstant } from '@shared/constants/constant'
 import { AppModule } from './app.module'
 
 const currentENV = process.env.NODE_ENV

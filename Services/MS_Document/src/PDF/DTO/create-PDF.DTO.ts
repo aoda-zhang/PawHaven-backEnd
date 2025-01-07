@@ -10,7 +10,7 @@ export default class CreatePDFDTO {
     template: string
 
     @ApiProperty({ description: 'PDF data for generate PDF file' })
-    @IsNotEmpty({ message: 'PDF is empty!' })
+    @IsNotEmpty({ message: 'PDF data is required!' })
     @IsObject()
     PDFData: Record<string, any>
 }

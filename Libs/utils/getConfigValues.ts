@@ -1,14 +1,6 @@
 import { readFileSync } from 'node:fs'
 import * as yaml from 'js-yaml'
-
-// environment constants
-export const EnvConstant = {
-    dev: 'DEV',
-    uat: 'UAT',
-    test: 'TEST',
-    prod: 'PROD'
-}
-
+import { EnvConstant } from '@shared/constants/constant'
 const isConfigAvaliable = (configFilePath: string) => {
     const avaliabEnvs = Object.values(EnvConstant)
     const configContent = readFileSync(configFilePath, 'utf8')
