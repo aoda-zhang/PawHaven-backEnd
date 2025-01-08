@@ -1,64 +1,71 @@
 import { Injectable } from '@nestjs/common'
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
-import puppeteer from 'puppeteer'
+import puppeteer, { PDFOptions } from 'puppeteer'
 import { ServerStyleSheet } from 'styled-components'
 import CreatePDFDTO from '@shared/DTO/Document/create-PDF.DTO'
 
 @Injectable()
 export class PDFService {
-    async getPDFHTMLContent(PDFPayload: CreatePDFDTO) {
-        const header = await this.getHTMLContent({ template: 'common_header' })
-        const footer = await this.getHTMLContent({ template: 'common_footer' })
-        const content = await this.getHTMLContent(PDFPayload)
-        return {
-            header: PDFPayload?.PDFOptions?.headerTemplate ?? header,
-            footer: PDFPayload?.PDFOptions?.footerTemplate ?? footer,
-            content
-        }
-    }
-    getHTMLContent(PDFPayload: CreatePDFDTO) {
+    getHTMLContent({ template, PDFData = {} }) {
         try {
             const styleSheet = new ServerStyleSheet()
-            const { default: TemplateComponent } = require(`./templates/${PDFPayload?.template}`)
+            const { default: TemplateComponent } = require(`./templates/${template}`)
             const htmlContent = ReactDOMServer.renderToStaticMarkup(
-                styleSheet.collectStyles(
-                    React.createElement(TemplateComponent, PDFPayload?.PDFData)
-                )
+                styleSheet.collectStyles(React.createElement(TemplateComponent, PDFData))
             )
             const styleTags = styleSheet.getStyleTags()
             return `<html lang="en"><head><meta charset="UTF-8" />${styleTags}</head><body>${htmlContent}</body></html>`
         } catch (error) {
             console.error(error)
-            throw new Error(`get the ${PDFPayload?.template} with error: ${error}`)
+            throw new Error(`get the ${template} with error: ${error}`)
         }
     }
 
-    async generatePDF(payload: CreatePDFDTO) {
+    async getPDFSettings(payload: CreatePDFDTO): Promise<PDFOptions> {
         try {
+            const commonHeader = await this.getHTMLContent({ template: 'common_header' })
+            const commonFooter = await this.getHTMLContent({ template: 'common_footer' })
             const {
                 format = 'A4',
-                margin,
-                displayHeaderFooter,
-                headerTemplate,
-                footerTemplate
-            } = payload?.PDFOptions ?? {}
-            const browser = await puppeteer.launch()
-            const page = await browser.newPage()
-            // await page.setContent(htmlContent, { waitUntil: 'networkidle0' })
-            const PDFBuffer = await page.pdf({
-                format,
-                margin: margin ?? {
+                margin = {
                     top: '20mm',
                     bottom: '20mm',
                     left: '20mm',
                     right: '20mm'
                 },
-                displayHeaderFooter: displayHeaderFooter ?? true,
-                // headerTemplate: headerTemplate ?? commonHeader,
-                // footerTemplate: footerTemplate ?? commonFooter,
+                displayHeaderFooter = true,
+                headerTemplate = commonHeader,
+                footerTemplate = commonFooter,
+                preferCSSPageSize = true // Optionally use CSS page size
+            } = payload?.PDFOptions ?? {}
+            return {
+                format,
+                margin,
+                displayHeaderFooter,
+                headerTemplate,
+                footerTemplate,
+                preferCSSPageSize,
                 ...(payload?.PDFOptions ?? {})
+            }
+        } catch (error) {
+            console.error(error)
+            throw new Error(`get PDF settings with error: ${error}`)
+        }
+    }
+
+    async generatePDF(payload: CreatePDFDTO) {
+        try {
+            const browser = await puppeteer.launch()
+            const page = await browser.newPage()
+
+            const PDFMainContent = await this.getHTMLContent({
+                template: payload?.template,
+                PDFData: payload?.PDFData
             })
+            await page.setContent(PDFMainContent, { waitUntil: 'networkidle0' })
+            const PDFSettings = await this.getPDFSettings(payload)
+            const PDFBuffer = await page.pdf(PDFSettings)
             await browser.close()
             return {
                 data: Buffer.from(PDFBuffer?.buffer),

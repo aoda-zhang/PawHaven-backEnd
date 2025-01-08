@@ -2,9 +2,11 @@ import React from "react";
 
 const CommonHeader = () => {
   return (
-    <div style={{ fontSize: "10px", textAlign: "center", width: "100%" }}>
-      这是页眉
-    </div>
+    <img
+      src="https://di-uploads-pod5.dealerinspire.com/millsmotorsbuickgmc/uploads/2016/08/road-trip-1500x750.jpg"
+      alt="header"
+      style={{ width: "100%", height: "auto" }}
+    />
   );
 };
 
