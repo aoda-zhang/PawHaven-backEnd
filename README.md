@@ -1,9 +1,15 @@
-# Nest practice note
+# Fullstack Backend
 
-创建块连接
-mac
-切换到具体路径下，比如 gateway/src 下
+##  How to link shared library
+
+For Mac
+
+```
 ln -s ../../../Libs shared
+```
 
-windows
+For Windows
+
+```
 mklink /D shared ..\..\Libs
+```

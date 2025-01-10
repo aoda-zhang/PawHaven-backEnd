@@ -9,7 +9,7 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
 @Module({
     imports: [
         SharedModule.forRoot({
-            configFilePath
+            configFilePath,
         }),
         EmailModule,
         PDFModule

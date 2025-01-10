@@ -4,9 +4,12 @@ import * as ReactDOMServer from 'react-dom/server'
 import puppeteer, { PDFOptions } from 'puppeteer'
 import { ServerStyleSheet } from 'styled-components'
 import CreatePDFDTO from '@shared/DTO/Document/create-PDF.DTO'
+import convertImageToBase64 from '@shared/utils/convertImagToBase64'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class PDFService {
+    constructor(private readonly configService: ConfigService) {}
     getHTMLContent({ template, PDFData = {} }) {
         try {
             const styleSheet = new ServerStyleSheet()
@@ -22,25 +25,44 @@ export class PDFService {
         }
     }
 
+    async getHeaderFooter(payload: CreatePDFDTO) {
+        const headerLogo = await convertImageToBase64(this.configService.get('PDF.headerLogo'))
+        const headerTemplate = await this.getHTMLContent({
+            template: 'common_header',
+            PDFData: { logoUrl: headerLogo, ...(payload?.PDFHeaderData ?? {}) }
+        })
+        const footerTemplate = await this.getHTMLContent({
+            template: 'common_footer',
+            PDFData: { ...(payload?.PDFFooterData ?? {}) }
+        })
+        return {
+            headerTemplate,
+            footerTemplate
+        }
+    }
+
     async getPDFSettings(payload: CreatePDFDTO): Promise<PDFOptions> {
         try {
-            const commonHeader = await this.getHTMLContent({ template: 'common_header' })
-            const commonFooter = await this.getHTMLContent({ template: 'common_footer' })
+            const headerFooter = await this.getHeaderFooter(payload)
             const {
                 format = 'A4',
+                width = '100%',
+                height = '100%',
                 margin = {
-                    top: '20mm',
-                    bottom: '20mm',
-                    left: '20mm',
-                    right: '20mm'
+                    top: '80px',
+                    bottom: '80px',
+                    left: '20px',
+                    right: '20px'
                 },
                 displayHeaderFooter = true,
-                headerTemplate = commonHeader,
-                footerTemplate = commonFooter,
+                headerTemplate = headerFooter?.headerTemplate,
+                footerTemplate = headerFooter?.footerTemplate,
                 preferCSSPageSize = true // Optionally use CSS page size
             } = payload?.PDFOptions ?? {}
             return {
                 format,
+                width,
+                height,
                 margin,
                 displayHeaderFooter,
                 headerTemplate,
@@ -61,9 +83,11 @@ export class PDFService {
 
             const PDFMainContent = await this.getHTMLContent({
                 template: payload?.template,
-                PDFData: payload?.PDFData
+                PDFData: payload?.PDFContentData
             })
-            await page.setContent(PDFMainContent, { waitUntil: 'networkidle0' })
+            await page.setContent(PDFMainContent, {
+                waitUntil: ['networkidle2', 'domcontentloaded']
+            })
             const PDFSettings = await this.getPDFSettings(payload)
             const PDFBuffer = await page.pdf(PDFSettings)
             await browser.close()

@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 import { EnvConstant } from '@shared/constants/constant'
+import i18n from './i18n/i18n.config'
 
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
@@ -26,6 +27,8 @@ async function bootstrap() {
     )
 
     await app.startAllMicroservices()
+    // Initialize i18n
+    app.use(i18n.init)
 
     // app.useLogger(app.get(Logger))
 

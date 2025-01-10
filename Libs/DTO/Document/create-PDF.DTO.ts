@@ -10,10 +10,20 @@ export default class CreatePDFDTO {
     @Type(() => String)
     template: string
 
-    @ApiPropertyOptional({ description: 'PDF data for generate PDF file' })
+    @ApiPropertyOptional({ description: 'PDF header data for generate PDF file' })
     @IsOptional()
     @IsObject()
-    PDFData?: Record<string, any>
+    PDFHeaderData?: Record<string, any>
+
+    @ApiPropertyOptional({ description: 'PDF data for generate PDF file' })
+    @IsNotEmpty({ message: 'PDF content data is required' })
+    @IsObject()
+    PDFContentData: Record<string, any>
+
+    @ApiPropertyOptional({ description: 'PDF footer data for generate PDF file' })
+    @IsOptional()
+    @IsObject()
+    PDFFooterData?: Record<string, any>
 
     @ApiPropertyOptional({ description: 'PDF config for generate PDF file' })
     @IsOptional()
