@@ -4,15 +4,14 @@ import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
-import { EnvConstant } from '@shared/constants/constant'
-import i18n from './i18n/i18n.config'
-
+import { ConfigKeys, EnvConstant } from '@shared/constants/constant'
+import i18n from 'i18n'
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: true
     })
-    const microServiceOption = app.get(ConfigService).get('microService')
+    const microServiceOption = app.get(ConfigService).get(ConfigKeys.serviceOptions)
 
     app.connectMicroservice(
         {
@@ -29,8 +28,6 @@ async function bootstrap() {
     await app.startAllMicroservices()
     // Initialize i18n
     app.use(i18n.init)
-
-    // app.useLogger(app.get(Logger))
 
     // global service prefix
     const prefix = app.get(ConfigService).get('http.prefix') ?? ''

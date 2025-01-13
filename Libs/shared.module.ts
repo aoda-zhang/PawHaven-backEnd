@@ -14,8 +14,6 @@ interface SharedModuleOptions {
     configFilePath: string
     // the speed limit key in configs
     limitKey?: string
-    // the i18n path
-    i18nPath?: string
     microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
@@ -52,7 +50,6 @@ class SharedModule {
 
             // microservice register - support both approaches
             imports = [...imports, MSClientModule.register(configFilePath)]
-
 
             return imports
         }

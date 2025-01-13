@@ -21,7 +21,9 @@ export const MSClientNames = {
 // config keys from env config file
 export const ConfigKeys = {
     DBConnections: 'DBConnections',
-    MicroServices: 'MicroServices'
+    MicroServices: 'MicroServices',
+    serviceOptions: 'serviceOptions',
+    I18n: 'I18nOptions'
 }
 
 export const Versions = {

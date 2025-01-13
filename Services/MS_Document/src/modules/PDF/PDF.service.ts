@@ -6,6 +6,7 @@ import { ServerStyleSheet } from 'styled-components'
 import CreatePDFDTO from '@shared/DTO/Document/create-PDF.DTO'
 import convertImageToBase64 from '@shared/utils/convertImagToBase64'
 import { ConfigService } from '@nestjs/config'
+import i18n from '@i18n/i18n.config'
 
 @Injectable()
 export class PDFService {
@@ -46,8 +47,6 @@ export class PDFService {
             const headerFooter = await this.getHeaderFooter(payload)
             const {
                 format = 'A4',
-                width = '100%',
-                height = '100%',
                 margin = {
                     top: '80px',
                     bottom: '80px',
@@ -61,8 +60,6 @@ export class PDFService {
             } = payload?.PDFOptions ?? {}
             return {
                 format,
-                width,
-                height,
                 margin,
                 displayHeaderFooter,
                 headerTemplate,
@@ -78,6 +75,10 @@ export class PDFService {
 
     async generatePDF(payload: CreatePDFDTO) {
         try {
+            // Set locale for PDF content to translate
+            const locale = payload?.locale ?? 'en'
+            i18n.setLocale(locale)
+
             const browser = await puppeteer.launch()
             const page = await browser.newPage()
 
