@@ -13,10 +13,14 @@ import { EmailService } from './email.service'
             useFactory: async (configs: ConfigService) => ({
                 transport: {
                     host: configs.get('email')?.host ?? '',
-                    secure: true,
+                    port: configs.get('email')?.port ?? '',
+                    secureConnection: false,
                     auth: {
                         user: configs.get('email')?.user ?? '',
-                        pass: configs.get('email')?.pwd ?? ''
+                        pass: configs.get('email')?.password ?? ''
+                    },
+                    tls: {
+                        ciphers: configs.get('email')?.tls?.ciphers ?? ''
                     }
                 }
             }),

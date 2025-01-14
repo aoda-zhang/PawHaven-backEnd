@@ -11,8 +11,6 @@ export default class CreatePDFDTO {
     template: string
 
     @ApiPropertyOptional({ description: 'Locale for generate PDF file' })
-    @IsOptional()
-    @IsString() 
     @Type(() => String)
     locale?: string
 
