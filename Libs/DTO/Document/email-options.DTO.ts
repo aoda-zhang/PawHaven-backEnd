@@ -2,7 +2,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
 import { IsArray, IsNotEmpty, IsOptional } from 'class-validator'
 import { IsString } from 'class-validator'
-import { Attachment } from 'nodemailer/lib/mailer'
 
 // More options can refer to  ISendMailOptions from '@nestjs-modules/mailer'
 export default class EmailOptionsDTO {
@@ -33,5 +32,5 @@ export default class EmailOptionsDTO {
     @IsOptional()
     @IsArray()
     @Type(() => Array)
-    attachments?: Attachment[]
+    attachments?: any[]
 }

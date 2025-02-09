@@ -48,10 +48,10 @@ export class PDFService {
             const {
                 format = 'A4',
                 margin = {
-                    top: '80px',
-                    bottom: '80px',
-                    left: '20px',
-                    right: '20px'
+                    top: '120px',
+                    bottom: '120px',
+                    left: '40px',
+                    right: '40px'
                 },
                 displayHeaderFooter = true,
                 headerTemplate = headerFooter?.headerTemplate,

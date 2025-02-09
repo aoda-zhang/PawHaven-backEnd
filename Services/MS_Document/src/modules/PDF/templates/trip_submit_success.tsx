@@ -6,10 +6,6 @@ const Title = styled.div`
   text-align: center;
 `;
 
-const ContentItem = styled.div`
-  margin-right: 20px;
-`;
-
 interface Props {
   title: string;
   content: { name: string; value: string }[];
@@ -19,10 +15,10 @@ const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => {
     <>
       <Title>{title}</Title>
       {content?.map((item, index) => (
-        <ContentItem key={index}>
+        <div key={index}>
           <span>{item?.name}</span>
           <span>{item.value}</span>
-        </ContentItem>
+        </div>
       ))}
     </>
   );
