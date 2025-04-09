@@ -4,12 +4,12 @@
     "jsx": "react-jsx",
     // "esModuleInterop": true,
     // "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
-    "outDir": "./dist",
+    "baseUrl": "",
+    "outDir": "build",
     "paths": {
-      "@shared/*": ["./src/shared/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@i18n/*": ["./src/i18n/*"]
+      "@shared/*": ["src/shared/*"],
+      "@modules/*": ["src/modules/*"],
+      "@i18n/*": ["src/i18n/*"]
     }
   },
   "include": ["src"]
