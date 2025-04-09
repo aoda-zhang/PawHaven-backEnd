@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "build
-    "baseUrl": "
+    "baseUrl": "",
+    "outDir": "build",
     "paths": {
-      "@shared/*": ["src/shared/*,
-      "@modules/*": ["src/modules/*
+      "@shared/*": ["src/shared/*"],
+      "@modules/*": ["src/modules/*"]
     }
   },
   "include": ["src"]
