@@ -1,7 +1,7 @@
 {
   "private": "true",
   "name": "@aoda-zhang/honey-service",
-  "main": "dist/main.js",
+  "main": "build/main.js",
   "version": "1.0.0",
   "engines": {
     "node": ">=22",
@@ -14,8 +14,8 @@
     "test": "cross-env NODE_ENV=test nest start --watch",
     "build:PROD": "cross-env NODE_ENV=prod nest build",
     "build:UAT": "cross-env NODE_ENV=uat nest build",
-    "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
-    "start:PROD": "cross-env NODE_ENV=prod node dist/main.js"
+    "start:UAT": "cross-env NODE_ENV=uat node build/main.js",
+    "start:PROD": "cross-env NODE_ENV=prod node build/main.js"
   },
   "dependencies": {
     "@nestjs/axios": "^3.1.3",
@@ -65,5 +65,5 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^4.9.5"
   },
-  "packageManager": "pnpm@9.7.0"
+  "packageManager": "pnpm@9.13.0"
 }
