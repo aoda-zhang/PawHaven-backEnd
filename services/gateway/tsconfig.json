@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "",
-    "outDir": "build",
+    "baseUrl": ".",
+    "outDir": "build"
     "paths": {
       "@shared/*": ["src/shared/*"],
       "@modules/*": ["src/modules/*"]
