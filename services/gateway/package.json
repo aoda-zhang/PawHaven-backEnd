@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/package",
     "private": true,
-    "name": "@aoda-zhang/center",
+    "name": "@aoda-zhang/gateway",
     "main": "build/main.js",
     "version": "1.0.0",
     "engines": {
@@ -12,7 +12,8 @@
         "start:debug": "cross-env NODE_ENV=dev nest start --debug --watch",
         "dev": "cross-env NODE_ENV=dev nest start --watch",
         "uat": "cross-env NODE_ENV=uat nest start --watch",
-        "build": "rm -rf build && nest build"
+        "build": "nest build",
+        "start": "NODE_ENV=uat node build/main.js"
     },
     "dependencies": {
         "@nestjs/axios": "^3.1.3",

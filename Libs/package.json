@@ -1,8 +1,7 @@
 {
-  "$schema": "http://json.schemastore.org/package",
   "private": true,
-  "name": "@aoda-zhang/center",
-  "main": "build/main.js",
+  "name": "shared-backend",
+  "main": "index.js",
   "version": "1.0.0",
   "engines": {
     "node": ">=22",
