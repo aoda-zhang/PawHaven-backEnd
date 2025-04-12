@@ -20,7 +20,7 @@ on:
         description: "The app name to deploy"
         required: true
         type: choice
-        options: [Services/Gateway, Services/MS_Document, Services/MS_Trip]
+        options: [services/gateway, services/ms_document, services/ms_trip]
 
 permissions:
   security-events: write
