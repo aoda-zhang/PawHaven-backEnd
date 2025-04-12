@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "engines": {
         "node": ">=22",
-        "pnpm": ">=9"
+        "pnpm": ">=10"
     },
     "scripts": {
         "start:debug": "cross-env NODE_ENV=dev nest start --debug --watch",
@@ -70,5 +70,5 @@
         "tsconfig-paths": "^4.2.0",
         "typescript": "^4.9.5"
     },
-    "packageManager": "pnpm@9.15.0"
+    "packageManager": "pnpm@10.8.0"
 }
