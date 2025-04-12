@@ -2,7 +2,7 @@
     "$schema": "http://json.schemastore.org/package",
     "private": true,
     "name": "@aoda-zhang/center",
-    "main": "dist/main.js",
+    "main": "build/main.js",
     "version": "1.0.0",
     "engines": {
         "node": ">=22",
@@ -12,11 +12,7 @@
         "start:debug": "cross-env NODE_ENV=dev nest start --debug --watch",
         "dev": "cross-env NODE_ENV=dev nest start --watch",
         "uat": "cross-env NODE_ENV=uat nest start --watch",
-        "test": "cross-env NODE_ENV=test nest start --watch",
-        "build:PROD": "cross-env NODE_ENV=prod nest build",
-        "build:UAT": "cross-env NODE_ENV=uat nest build",
-        "start:UAT": "cross-env NODE_ENV=uat node dist/main.js",
-        "start:PROD": "cross-env NODE_ENV=prod node dist/main.js"
+        "build": "rm -rf build && nest build"
     },
     "dependencies": {
         "@nestjs/axios": "^3.1.3",
