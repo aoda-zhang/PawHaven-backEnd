@@ -1,6 +1,6 @@
 packages:
   - "services/*"
-  - "Libs/*"
+  - "Libs"
 ignoredBuiltDependencies:
   - "@biomejs/biome"
   - "@parcel/watcher"
