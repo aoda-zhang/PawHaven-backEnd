@@ -1,9 +1,9 @@
 // environment constants
 export const EnvConstant = {
-    dev: 'DEV',
-    uat: 'UAT',
-    test: 'TEST',
-    prod: 'PROD'
+    dev: 'dev',
+    uat: 'uat',
+    test: 'test',
+    prod: 'prod'
 }
 export const MicroServiceNames = {
     TRIP: 'trip',
