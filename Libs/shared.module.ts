@@ -5,15 +5,12 @@ import DatabaseModule from './core/dataBase/db.module'
 import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
 import HttpInterceptor from './core/httpClient/httpInterceptor'
 import MSClientModule from './core/microServiceClient/msClient.module'
-import SpeedlimitModule from './core/speedlimit/speedlimit.module'
 import MiddlewareModule from './middlewares/index.module'
 interface SharedModuleOptions {
     // the env config file path, e.g.
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
-    // the speed limit key in configs
-    limitKey?: string
     microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
@@ -25,27 +22,22 @@ class SharedModule {
     static forRoot(options: SharedModuleOptions): DynamicModule {
         const {
             configFilePath,
-            limitKey,
             isIntergrateMiddware = true,
             isIntergrateHttpExceptionFilter = false,
             isIntergrateHttpInterceptor = false
         } = options
 
         const getImports = () => {
-            let imports = []
+            let imports: DynamicModule[] = []
             if (configFilePath) {
                 imports = [...imports, ConfigsModule.forRoot(configFilePath)]
             }
             // dynamic db connection
             imports = [...imports, DatabaseModule.forRoot(configFilePath)]
 
-            // speed limit
-            if (limitKey) {
-                imports = [...imports, SpeedlimitModule.forRoot(limitKey)]
-            }
             // middleware
             if (isIntergrateMiddware) {
-                imports = [...imports, MiddlewareModule]
+                imports = [...imports, { module: MiddlewareModule }]
             }
 
             // microservice register - support both approaches

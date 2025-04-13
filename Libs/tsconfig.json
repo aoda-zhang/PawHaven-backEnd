@@ -15,11 +15,18 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "baseUrl": "",
-    "outDir": "build",
     "paths": {
-      "@shared/*": ["src/shared/*"],
-      "@modules/*": ["src/modules/*"]
+      "@utils/*": ["./utils/*"],
+      "@core/*": ["./core/*"],
+      "@dtos/*": ["./DTO//*"]
     }
   },
-  "include": ["src"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "coverage",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

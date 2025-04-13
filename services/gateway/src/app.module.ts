@@ -15,7 +15,6 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
     imports: [
         SharedModule.forRoot({
             configFilePath,
-            limitKey: 'limitation',
             isIntergrateHttpExceptionFilter: true,
             isIntergrateHttpInterceptor: true
         }),

@@ -1,6 +1,6 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import getConfigValues from '@shared/utils/getConfigValues'
+import getConfigValues from '../../utils/getConfigValues'
 
 @Global()
 @Module({})
@@ -20,8 +20,7 @@ class ConfigsModule {
 
         return {
             module: ConfigsModule,
-            imports: [ConfigModule, DynamicConfigModule],
-            exports: [DynamicConfigModule]
+            imports: [DynamicConfigModule]
         }
     }
 }
