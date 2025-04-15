@@ -1,7 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common'
-
 import CreateUserDTO from '@modules/User/dto/create-user.dto'
-
 import AuthService from './auth.service'
 import NoToken from './middlewares/noToken.decorator'
 

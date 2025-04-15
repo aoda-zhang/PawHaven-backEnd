@@ -8,6 +8,7 @@ import SignGuard from '@shared/guards/Sign.guard'
 import SharedModule from '@shared/shared.module'
 import { DocumentModule } from '@modules/Document/document.module'
 import { EnvConstant } from '@shared/constants/constant'
+import UserModule from '@modules/User/user.module'
 const currentEnv = process.env.NODE_ENV ?? 'uat'
 const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
 
@@ -19,10 +20,10 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
             isIntergrateHttpInterceptor: true
         }),
         TripModule,
-        DocumentModule
-        // UserModule,
+        DocumentModule,
+        UserModule,
         // AuthModule,
-        // ACLModule,
+        ACLModule
     ],
     controllers: [],
     providers: [

@@ -1,14 +1,10 @@
 import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { ClientProxy } from '@nestjs/microservices'
 import { MSClientNames, MicroServiceNames } from '@shared/constants/constant'
 import tripMessagePattern from '@shared/constants/MSMessagePatterns/trip.messagePattern'
 @Controller(MicroServiceNames.TRIP)
 export class MS_TripController {
-    constructor(
-        @Inject(MSClientNames.MS_TRIP) private readonly tripService: ClientProxy,
-        private configs: ConfigService
-    ) {}
+    constructor(@Inject(MSClientNames.MS_TRIP) private readonly tripService: ClientProxy) {}
 
     @Get('info/:id')
     getTrip(@Param('id') id: string) {
@@ -18,7 +14,7 @@ export class MS_TripController {
         //     endDate: '2024-01-01',
         //     id
         // })
-        return this.configs.get('DBConnections')
+        return `Trip ${id} is great`
     }
 
     @Post('create')

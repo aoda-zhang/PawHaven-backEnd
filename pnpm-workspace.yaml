@@ -1,7 +1,10 @@
 packages:
-  - "services/*"
-  - "Libs"
-ignoredBuiltDependencies:
-  - "@biomejs/biome"
-  - "@parcel/watcher"
-  - esbuild
+  - services/*
+  - Libs
+
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@nestjs/core'
+  - '@scarf/scarf'
+  - bcrypt
+  - puppeteer
