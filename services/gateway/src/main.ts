@@ -38,7 +38,7 @@ async function bootstrap() {
     app.use(helmet())
     const port = app.get(ConfigService).get('http.port') ?? 3000
     await app
-        .listen(port, () => {
+        .listen(port, '0.0.0.0', () => {
             ;[EnvConstant.dev, EnvConstant.uat]?.includes(currentENV?.toUpperCase()) &&
                 console.log(`Successfully runing on local  http://localhost:${port}`)
         })
