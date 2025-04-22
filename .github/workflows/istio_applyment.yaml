@@ -24,6 +24,7 @@ jobs:
       target_config_path: services/istio/${{inputs.deployedEnvironment }}
     secrets:
       PAT: ${{ secrets.BACKEND_PAT }}
-      # Dynamic get secrets by environment example,like DOCKER_SERVER_UAT,DOCKER_SERVER_TEST
       AKS_NMESPACE: ${{ secrets[format('AKS_NAMESPACE_{0}', inputs.deployedEnvironment)] }}
       AZURE_CREDS: ${{ secrets.AZURE_CREDS_DEV }}
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP_DEV }}
+      AKS_CLUSTER_NAME: ${{ secrets.AKS_CLUSTER_NAME_DEV }}
