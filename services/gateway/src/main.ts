@@ -36,7 +36,7 @@ async function bootstrap() {
     )
     await initSwagger(app)
     app.use(helmet())
-    const port = app.get(ConfigService).get('http.port') ?? 3000
+    const port = app.get(ConfigService).get('http.port') ?? 8080
     await app
         .listen(port, '0.0.0.0', () => {
             ;[EnvConstant.dev, EnvConstant.uat]?.includes(currentENV?.toUpperCase()) &&

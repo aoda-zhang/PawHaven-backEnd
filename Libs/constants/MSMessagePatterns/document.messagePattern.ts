@@ -12,7 +12,8 @@ import { MicroServiceNames, Versions } from '../constant'
 const DocumentMessagePattern = {
     GET_DOCUMENT_LIST1: `${MicroServiceNames.DOCUMENT}.getDocumentList.${Versions.v1}`,
     GET_DOCUMENT_BY_ID: `${MicroServiceNames.DOCUMENT}.getDocumentById.${Versions.v1}`,
-    GENERATE_PDF: `${MicroServiceNames.DOCUMENT}.generatePdf.${Versions.v1}`
+    GENERATE_PDF: `${MicroServiceNames.DOCUMENT}.generatePdf.${Versions.v1}`,
+    GET_DEFAULT_TRIP_VIEWS: `${MicroServiceNames.DOCUMENT}.defaultTripViews.${Versions.v1}`
 }
 
 export default DocumentMessagePattern

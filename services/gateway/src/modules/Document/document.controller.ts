@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common'
+import { Body, Controller, Get, Headers, Inject, Post, Res } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { MicroServiceNames, MSClientNames } from '@shared/constants/constant'
 import DocumentMessagePattern from '@shared/constants/MSMessagePatterns/document.messagePattern'
@@ -21,5 +21,10 @@ export class DocumentController {
             'Content-Disposition': `attachment; filename=${PDFData?.fileName}`
         })
         res.end(PDFContent)
+    }
+
+    @Get('/default-trip-views')
+    async getDefaultTripViews(@Headers('locale') locale: string) {
+        return this.documentService.send(DocumentMessagePattern.GET_DEFAULT_TRIP_VIEWS, { locale })
     }
 }

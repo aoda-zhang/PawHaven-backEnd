@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common'
-import { MessagePattern, Payload, Transport } from '@nestjs/microservices'
+import { MessagePattern, Payload } from '@nestjs/microservices'
 import { MicroServiceNames } from '@shared/constants/constant'
 import TRIP_MESSAGE_PATTERN from '@shared/core/microServiceClient/MSMessageMappings/trip.messagePattern'
 import { TripService } from './trip.service'
