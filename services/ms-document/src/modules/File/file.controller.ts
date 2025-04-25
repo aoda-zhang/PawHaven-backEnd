@@ -4,7 +4,7 @@ import DocumentMessagePattern from '@shared/constants/MSMessagePatterns/document
 import { MessagePattern, Payload } from '@nestjs/microservices'
 
 @Controller('file')
-export class EmailController {
+export class FileController {
     constructor(private readonly fileService: FileService) {}
 
     @MessagePattern(DocumentMessagePattern.GET_DEFAULT_TRIP_VIEWS)

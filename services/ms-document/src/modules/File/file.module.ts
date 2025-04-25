@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
-// import { PDFController } from './PDF.controller'
-// import { HistoryService } from './PDF.service'
+import { FileController } from './file.controller'
+import { FileService } from './file.service'
 
 @Module({
     // imports: [MongooseModule.forFeature([{ name: DBCollection.HISTORY, schema: HistorySchema }])],
-    controllers: [],
-    providers: [],
-    exports: []
+    controllers: [FileController],
+    providers: [FileService],
+    exports: [FileService]
 })
 export default class FileModule {}
