@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import {
     DiskHealthIndicator,
+    HealthCheckService,
     HttpHealthIndicator,
     MemoryHealthIndicator,
     MongooseHealthIndicator
@@ -16,29 +17,13 @@ export enum HealthStatus {
 @Injectable()
 export class HealthService {
     constructor(
+        private health: HealthCheckService,
         private http: HttpHealthIndicator,
         private disk: DiskHealthIndicator,
         private memory: MemoryHealthIndicator,
         private mongodb: MongooseHealthIndicator,
         private config: ConfigService
     ) {}
-
-    private wrap = async (key: string, checker: () => Promise<any>) => {
-        try {
-            const result = await checker()
-            return {
-                key,
-                status: HealthStatus.ok,
-                info: result
-            }
-        } catch (err) {
-            return {
-                key,
-                status: HealthStatus.error,
-                error: err?.message || 'Unknown error'
-            }
-        }
-    }
 
     healthChecker = async () => {
         const checks = [
@@ -66,6 +51,7 @@ export class HealthService {
         const error = results.filter((r) => r.status === HealthStatus.error)
 
         return {
+            timestamp: new Date().toISOString(),
             success,
             error
         }
@@ -73,5 +59,27 @@ export class HealthService {
 
     ping = async () => {
         return 'hello world!'
+    }
+
+    private wrap = async (key: string, checker: () => Promise<any>) => {
+        const start = Date.now()
+        try {
+            const result = await checker()
+            const duration = Date.now() - start
+            return {
+                key,
+                status: HealthStatus.ok,
+                responseTime: `${duration}ms`,
+                info: result
+            }
+        } catch (err) {
+            const duration = Date.now() - start
+            return {
+                key,
+                status: HealthStatus.error,
+                responseTime: `${duration}ms`,
+                error: err?.message || 'Unknown error'
+            }
+        }
     }
 }
