@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import {
     DiskHealthIndicator,
-    HealthCheckService,
     HttpHealthIndicator,
     MemoryHealthIndicator,
     MongooseHealthIndicator
@@ -10,44 +10,67 @@ import {
 export enum HealthStatus {
     ok = 'ok',
     error = 'error',
-    shutting_down = 'ok'
+    shutting_down = 'shutting_down'
 }
 
 @Injectable()
 export class HealthService {
     constructor(
-        private health: HealthCheckService,
         private http: HttpHealthIndicator,
         private disk: DiskHealthIndicator,
         private memory: MemoryHealthIndicator,
-        private mongodb: MongooseHealthIndicator
+        private mongodb: MongooseHealthIndicator,
+        private config: ConfigService
     ) {}
 
-    healthChecker = async () => {
-        return this.health.check([
-            // Check if the gateway service is reachable
-            async () =>
-                this.http.pingCheck('gateway-service', 'http://http://130.33.242.136/api/ping'),
-
-            // Check if MongoDB connection is healthy
-            async () => this.mongodb.pingCheck('mongo-db'),
-
-            // Check if disk storage usage is under threshold
-            async () =>
-                this.disk.checkStorage('disk-storage', {
-                    thresholdPercent: 0.9, // Mark as unhealthy if usage exceeds 90%
-                    path: '/' // Root path (use 'C:\\' for Windows)
-                }),
-
-            // Check heap memory usage
-            async () => this.memory.checkHeap('memory-heap', 300 * 1024 * 1024),
-            // 300 MB threshold for heap memory
-
-            // Check RSS (Resident Set Size) memory usage
-            async () => this.memory.checkRSS('memory-rss', 500 * 1024 * 1024)
-            // 500 MB threshold for RSS memory
-        ])
+    private wrap = async (key: string, checker: () => Promise<any>) => {
+        try {
+            const result = await checker()
+            return {
+                key,
+                status: HealthStatus.ok,
+                info: result
+            }
+        } catch (err) {
+            return {
+                key,
+                status: HealthStatus.error,
+                error: err?.message || 'Unknown error'
+            }
+        }
     }
+
+    healthChecker = async () => {
+        const checks = [
+            this.wrap('gateway-service', async () =>
+                this.http.pingCheck('gateway-service', this.config.get('health.ping'))
+            ),
+            this.wrap('mongo-db', async () => this.mongodb.pingCheck('mongo-db')),
+            this.wrap('disk-storage', async () =>
+                this.disk.checkStorage('disk-storage', {
+                    thresholdPercent: 0.9,
+                    path: '/'
+                })
+            ),
+            this.wrap('memory-heap', async () =>
+                this.memory.checkHeap('memory-heap', 300 * 1024 * 1024)
+            ),
+            this.wrap('memory-rss', async () =>
+                this.memory.checkRSS('memory-rss', 500 * 1024 * 1024)
+            )
+        ]
+
+        const results = await Promise.all(checks)
+
+        const success = results.filter((r) => r.status === HealthStatus.ok)
+        const error = results.filter((r) => r.status === HealthStatus.error)
+
+        return {
+            success,
+            error
+        }
+    }
+
     ping = async () => {
         return 'hello world!'
     }
