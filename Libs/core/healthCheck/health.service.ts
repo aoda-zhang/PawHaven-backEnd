@@ -7,6 +7,12 @@ import {
     MongooseHealthIndicator
 } from '@nestjs/terminus'
 
+export enum HealthStatus {
+    ok = 'ok',
+    error = 'error',
+    shutting_down = 'ok'
+}
+
 @Injectable()
 export class HealthService {
     constructor(

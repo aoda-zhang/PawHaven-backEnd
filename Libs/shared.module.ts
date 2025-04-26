@@ -23,8 +23,8 @@ class SharedModule {
         const {
             configFilePath,
             isIntergrateMiddware = true,
-            isIntergrateHttpExceptionFilter = false,
-            isIntergrateHttpInterceptor = false
+            isIntergrateHttpExceptionFilter = true,
+            isIntergrateHttpInterceptor = true
         } = options
 
         const getImports = () => {

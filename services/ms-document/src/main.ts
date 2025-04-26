@@ -4,28 +4,16 @@ import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
-import { ConfigKeys, EnvConstant } from '@shared/constants/constant'
+import { EnvConstant } from '@shared/constants/constant'
 import i18n from 'i18n'
 const currentENV = process.env.NODE_ENV
 async function bootstrap() {
+    // Hybrid application
+    // can be used as a microservice or a web service both
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
         bufferLogs: true
     })
-    const microServiceOption = app.get(ConfigService).get(ConfigKeys.serviceOptions)
 
-    app.connectMicroservice(
-        {
-            transport: microServiceOption?.transport ?? 0,
-            options: {
-                host: microServiceOption?.host,
-                port: microServiceOption?.port
-            }
-        },
-        // Apply the main app config to the microservice
-        { inheritAppConfig: true }
-    )
-
-    await app.startAllMicroservices()
     // Initialize i18n
     app.use(i18n.init)
 
@@ -49,7 +37,8 @@ async function bootstrap() {
     // avoid attack
     app.use(helmet())
 
-    const port = app.get(ConfigService).get('http.port') ?? 3000
+    const port = app.get(ConfigService).get('http.port') ?? 8082
+    // As a web service
     await app
         .listen(port, () => {
             // eslint-disable-next-line no-unused-expressions

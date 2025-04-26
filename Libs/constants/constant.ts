@@ -22,7 +22,7 @@ export const MSClientNames = {
 export const ConfigKeys = {
     DBConnections: 'DBConnections',
     MicroServices: 'MicroServices',
-    serviceOptions: 'serviceOptions',
+    microServiceOptions: 'microServiceOptions',
     I18n: 'I18nOptions'
 }
 
