@@ -1,8 +1,8 @@
 import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ConfigKeys } from '@shared/constants/constant'
-import getConfigValues from '@shared/utils/getConfigValues'
+import { ConfigKeys } from '../../constants/constant'
+import getConfigValues from '../../utils/getConfigValues'
 @Module({})
 class DatabaseModule {
     /**

@@ -3,7 +3,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 import ConfigsModule from './core/configModule/configs.module'
 import DatabaseModule from './core/dataBase/db.module'
 import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
-import HttpInterceptor from './core/httpClient/httpInterceptor'
+import HttpSuccessInterceptor from './core/httpClient/httpInterceptor'
 import MSClientModule from './core/microServiceClient/msClient.module'
 import MiddlewareModule from './middlewares/index.module'
 import HttpClientModule from './core/httpClient/httpClient.module'
@@ -66,7 +66,7 @@ class SharedModule {
                     ...providers,
                     {
                         provide: APP_INTERCEPTOR,
-                        useClass: HttpInterceptor
+                        useClass: HttpSuccessInterceptor
                     }
                 ]
             }

@@ -1,39 +1,41 @@
 import {
-    type ArgumentsHost,
+    ArgumentsHost,
     Catch,
-    type ExceptionFilter,
+    ExceptionFilter,
     HttpException,
-    Injectable
+    Injectable,
+    HttpStatus
 } from '@nestjs/common'
 import type { HttpResType } from './interface'
-// 全局错误拦截处理
+
 @Injectable()
 @Catch(HttpException)
 export default class HttpExceptionFilter implements ExceptionFilter {
     catch(exception: HttpException, host: ArgumentsHost) {
-        const ctx = host.switchToHttp() // 获取请求上下文
+        const ctx = host.switchToHttp()
         const response = ctx.getResponse()
-        const errorRes = exception.getResponse()
-        // 设置错误信息
-        // @ts-ignore
-        const message = errorRes?.message
-            ? // @ts-ignore
-              errorRes?.message
-            : exception?.message
-              ? exception.message
-              : 'Service error'
 
-        const status = exception.getStatus()
-            ? exception.getStatus()
-            : // @ts-ignore
-              (errorRes?.statusCode ?? 400)
+        const exceptionResponse = exception.getResponse()
+        let message = 'Service error'
+        let status = HttpStatus.BAD_REQUEST
+
+        if (typeof exceptionResponse === 'string') {
+            message = exceptionResponse
+        } else if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
+            message = (exceptionResponse as any).message || message
+            status = (exceptionResponse as any).statusCode || exception.getStatus()
+        } else {
+            message = exception.message || message
+            status = exception.getStatus()
+        }
+
         const errorResponse: HttpResType = {
             status,
             isSuccess: false,
             message,
-            data: response?.data ?? null
+            data: null
         }
-        response.status(status)
-        response.send(errorResponse)
+
+        response.status(status).json(errorResponse)
     }
 }

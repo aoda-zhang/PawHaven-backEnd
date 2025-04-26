@@ -1,20 +1,18 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
-import { Observable, map } from 'rxjs'
-import { HttpResType } from './interface'
-// 全局成功请求拦截处理
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+
 @Injectable()
-export default class HttpInterceptor implements NestInterceptor {
-    intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+export default class HttpSuccessInterceptor<T> implements NestInterceptor<T, any> {
+    intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
         return next.handle().pipe(
             map((data) => {
-                const status = context?.switchToHttp()?.getResponse()?.statusCode ?? 200
-                const successResponse: HttpResType = {
-                    status,
+                return {
+                    status: 200,
                     isSuccess: true,
-                    message: '请求成功',
+                    message: 'Request successful',
                     data
                 }
-                return successResponse
             })
         )
     }

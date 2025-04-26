@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module } from '@nestjs/common'
 import { ClientsModule } from '@nestjs/microservices'
-import { ConfigKeys, MSClientNames } from '@shared/constants/constant'
-import getConfigValues from '@shared/utils/getConfigValues'
+import { ConfigKeys, MSClientNames } from '../../constants/constant'
+import getConfigValues from '../../utils/getConfigValues'
 
 @Global()
 @Module({})

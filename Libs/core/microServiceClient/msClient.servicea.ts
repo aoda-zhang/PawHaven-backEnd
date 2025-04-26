@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { MSClientNames } from '@shared/constants/constant'
+import { MSClientNames } from '../../constants/constant'
 
 @Injectable()
 export default class MSService {
