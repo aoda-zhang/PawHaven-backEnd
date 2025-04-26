@@ -6,6 +6,8 @@ import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
 import HttpInterceptor from './core/httpClient/httpInterceptor'
 import MSClientModule from './core/microServiceClient/msClient.module'
 import MiddlewareModule from './middlewares/index.module'
+import HttpClientModule from './core/httpClient/httpClient.module'
+import HealthCheckModule from './core/healthCheck/health.module'
 interface SharedModuleOptions {
     // the env config file path, e.g.
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
@@ -23,8 +25,8 @@ class SharedModule {
         const {
             configFilePath,
             isIntergrateMiddware = true,
-            isIntergrateHttpExceptionFilter = true,
-            isIntergrateHttpInterceptor = true
+            isIntergrateHttpExceptionFilter = false,
+            isIntergrateHttpInterceptor = false
         } = options
 
         const getImports = () => {
@@ -73,7 +75,7 @@ class SharedModule {
         }
         return {
             module: SharedModule,
-            imports: [...(getImports() ?? [])],
+            imports: [...(getImports() ?? []), HttpClientModule, HealthCheckModule],
             providers: getProviders()
         }
     }

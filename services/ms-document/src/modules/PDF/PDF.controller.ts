@@ -1,6 +1,5 @@
 import { BadRequestException, Body, Controller, Post, Res } from '@nestjs/common'
-import { MessagePattern, Payload } from '@nestjs/microservices'
-import documentMessagePattern from '@shared/constants/MSMessagePatterns/document.messagePattern'
+import { Payload } from '@nestjs/microservices'
 import CreatePDFDTO from '@shared/DTO/Document/create-PDF.DTO'
 import { PDFService } from './PDF.service'
 import { Response } from 'express'
@@ -13,7 +12,7 @@ export default class PDFController {
         private readonly configService: ConfigService
     ) {}
 
-    @MessagePattern(documentMessagePattern.GET_DOCUMENT_BY_ID)
+    // @MessagePattern(documentMessagePattern.GET_DOCUMENT_BY_ID)
     async generatePdf(@Payload() payload: CreatePDFDTO) {
         return await this.pdfService.generatePDF(payload)
     }

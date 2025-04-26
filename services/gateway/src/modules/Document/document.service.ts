@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common'
-import { MicroServiceNames } from '@shared/constants/constant'
+import { ConfigService } from '@nestjs/config'
 import HttpClientService from '@shared/core/httpClient/HttpClient.service'
 
 @Injectable()
 export default class DocumentService {
-    constructor(private http: HttpClientService) {}
+    private readonly httpClient: ReturnType<HttpClientService['create']>
+    constructor(
+        private http: HttpClientService,
+        private configService: ConfigService
+    ) {
+        this.httpClient = this.http.create(this.configService.get('documentService.baseURL'))
+    }
     getDefaultTripViews = async (locale: string) => {
-        return this.http.get(`${MicroServiceNames}/file/v1/default/${locale}`)
+        try {
+            return await this.httpClient.get(`/file/v1/default-trip-views/${locale}`)
+        } catch (error) {
+            throw new Error(`Error fetching default trip views: ${error}`)
+        }
     }
 }

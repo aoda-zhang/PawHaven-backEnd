@@ -1,15 +1,20 @@
-import { type MiddlewareConsumer, Module, type NestModule, RequestMethod } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
 import { HttpSettingMiddleware } from './httpSetting.middleware'
 
 @Module({
-    imports: [],
-    providers: [HttpSettingMiddleware]
+    providers: []
 })
 export default class MiddlewareModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(HttpSettingMiddleware)
-            .exclude()
-            .forRoutes({ path: '*', method: RequestMethod.ALL })
+            .exclude(
+                // exlude health route
+                { path: 'health', method: RequestMethod.GET }
+            )
+            .forRoutes({
+                path: '*',
+                method: RequestMethod.ALL
+            })
     }
 }

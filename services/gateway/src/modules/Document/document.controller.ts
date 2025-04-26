@@ -8,6 +8,6 @@ export class DocumentController {
 
     @Get('/v1/default-trip-views')
     async getDefaultTripViews(@Headers('locale') locale: string) {
-        return this.documentService.getDefaultTripViews(locale)
+        return await this.documentService.getDefaultTripViews(locale)
     }
 }

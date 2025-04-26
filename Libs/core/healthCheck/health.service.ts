@@ -1,8 +1,8 @@
-import { BadGatewayException, Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable } from '@nestjs/common'
 import {
     DiskHealthIndicator,
     HealthCheckService,
+    HttpHealthIndicator,
     MemoryHealthIndicator,
     MongooseHealthIndicator
 } from '@nestjs/terminus'
@@ -16,34 +16,39 @@ export enum HealthStatus {
 @Injectable()
 export class HealthService {
     constructor(
-        private readonly healthCheck: HealthCheckService,
-        private readonly disk: DiskHealthIndicator,
-        private readonly memory: MemoryHealthIndicator,
-        private readonly mongodb: MongooseHealthIndicator,
-        private readonly config: ConfigService
+        private health: HealthCheckService,
+        private http: HttpHealthIndicator,
+        private disk: DiskHealthIndicator,
+        private memory: MemoryHealthIndicator,
+        private mongodb: MongooseHealthIndicator
     ) {}
 
     healthChecker = async () => {
-        const healthInfo = await this.healthCheck.check([
-            () => this.disk.checkStorage('diskHealth', { thresholdPercent: 0.8, path: '/' }),
-            () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
-            () => this.mongodb.pingCheck('mongodbHealth', { timeout: 10 })
-        ])
-        switch (healthInfo?.status) {
-            case 'ok':
-            case 'shutting_down':
-                return healthInfo?.info
-            case 'error':
-                return healthInfo?.error
-            default:
-                return healthInfo?.info
-        }
-    }
+        return this.health.check([
+            // Check if the gateway service is reachable
+            async () =>
+                this.http.pingCheck('gateway-service', 'http://http://130.33.242.136/api/ping'),
 
-    pingCheck = (pingURL: string) => {
-        if (pingURL === this.config.get('ping.url')) {
-            return 'hello world'
-        }
-        throw new BadGatewayException('连接失败,请重新尝试')
+            // Check if MongoDB connection is healthy
+            async () => this.mongodb.pingCheck('mongo-db'),
+
+            // Check if disk storage usage is under threshold
+            async () =>
+                this.disk.checkStorage('disk-storage', {
+                    thresholdPercent: 0.9, // Mark as unhealthy if usage exceeds 90%
+                    path: '/' // Root path (use 'C:\\' for Windows)
+                }),
+
+            // Check heap memory usage
+            async () => this.memory.checkHeap('memory-heap', 300 * 1024 * 1024),
+            // 300 MB threshold for heap memory
+
+            // Check RSS (Resident Set Size) memory usage
+            async () => this.memory.checkRSS('memory-rss', 500 * 1024 * 1024)
+            // 500 MB threshold for RSS memory
+        ])
+    }
+    ping = async () => {
+        return 'hello world!'
     }
 }
