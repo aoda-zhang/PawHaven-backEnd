@@ -1,4 +1,5 @@
 // No need Sign validation
 import { SetMetadata } from '@nestjs/common'
-const NoSign = () => SetMetadata('NO_SIGN', true)
+import { Decorators } from '../constants/enum'
+const NoSign = () => SetMetadata(Decorators.noSign, true)
 export default NoSign

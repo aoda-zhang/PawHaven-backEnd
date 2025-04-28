@@ -26,12 +26,16 @@ import AuthService from './auth.service'
         AuthService,
         {
             provide: APP_GUARD,
-            useClass: JWTGuard
+            useClass: SignGuard
         },
         {
             provide: APP_GUARD,
-            useClass: ACLGuard
-        }
+            useClass: JWTGuard
+        },
+        // {
+        //     provide: APP_GUARD,
+        //     useClass: ACLGuard
+        // }
     ],
     exports: [AuthService]
 })

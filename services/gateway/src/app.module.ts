@@ -22,7 +22,7 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
         TripModule,
         DocumentModule,
         UserModule,
-        // AuthModule,
+        AuthModule,
         ACLModule
     ],
     controllers: [],
