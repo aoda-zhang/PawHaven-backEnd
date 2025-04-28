@@ -1,7 +1,7 @@
 import { Controller, Get, Headers } from '@nestjs/common'
 import { MicroServiceNames } from '@shared/constants/constant'
 import DocumentService from './document.service'
-import NoToken from '@modules/Auth/middlewares/noToken.decorator'
+import NoToken from '@shared/decorators/noToken.decorator'
 
 @Controller(MicroServiceNames.DOCUMENT)
 export class DocumentController {
