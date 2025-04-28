@@ -2,14 +2,14 @@ import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '
 import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
-import { Decorators, LocaleKeys } from '@shared/constants/enum'
+import { Decorators, LocaleKeys } from '../constants/enum'
 
 import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
-} from '@shared/core/httpClient/interface'
-import trime from '@shared/utils/trime'
+} from '../core/httpClient/interface'
+import trime from '../utils/trime'
 
 @Injectable()
 export default class JWTGuard implements CanActivate {

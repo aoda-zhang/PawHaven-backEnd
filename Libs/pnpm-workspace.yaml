@@ -1,9 +1,4 @@
-packages:
-  - services/*
-  - Libs
-
 onlyBuiltDependencies:
-  - '@biomejs/biome'
   - '@nestjs/core'
   - '@scarf/scarf'
   - bcrypt
