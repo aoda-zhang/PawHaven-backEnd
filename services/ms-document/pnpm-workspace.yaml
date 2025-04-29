@@ -1,0 +1,8 @@
+packages:
+  - src/shared
+  
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@scarf/scarf'
+  - bcrypt
+  - puppeteer
