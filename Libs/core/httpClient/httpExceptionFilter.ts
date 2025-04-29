@@ -3,39 +3,56 @@ import {
     Catch,
     ExceptionFilter,
     HttpException,
+    HttpStatus,
     Injectable,
-    HttpStatus
+    Logger
 } from '@nestjs/common'
-import type { HttpResType } from './interface'
+import { HttpResType } from './interface'
 
 @Injectable()
-@Catch(HttpException)
+@Catch()
 export default class HttpExceptionFilter implements ExceptionFilter {
-    catch(exception: HttpException, host: ArgumentsHost) {
-        const ctx = host.switchToHttp()
-        const response = ctx.getResponse()
+    private readonly logger = new Logger(HttpExceptionFilter.name)
+    catch(exception: any, host: ArgumentsHost) {
+        const isRpcContext = host.getType() === 'rpc'
+        const isHttpContext = host.getType() === 'http'
 
-        const exceptionResponse = exception.getResponse()
         let message = 'Service error'
-        let status = HttpStatus.BAD_REQUEST
+        let status = HttpStatus.INTERNAL_SERVER_ERROR
+        let data = null
 
-        if (typeof exceptionResponse === 'string') {
-            message = exceptionResponse
-        } else if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
-            message = (exceptionResponse as any).message || message
-            status = (exceptionResponse as any).statusCode || exception.getStatus()
+        if (exception instanceof HttpException) {
+            const res = exception.getResponse()
+            message = typeof res === 'string' ? res : (res as any)?.message || exception.message
+            status =
+                typeof res === 'object' && 'status' in res
+                    ? (res as any).status || exception.getStatus()
+                    : exception.getStatus()
+
+            data = typeof res === 'object' ? (res as any).data || null : null
         } else {
-            message = exception.message || message
-            status = exception.getStatus()
+            message = exception?.message ?? message
+            status = exception?.status ?? status
+            data = exception?.data ?? null
         }
 
         const errorResponse: HttpResType = {
             status,
             isSuccess: false,
             message,
-            data: null
+            data
         }
 
-        response.status(status).json(errorResponse)
+        this.logger.error(
+            `Exception caught (context: ${host.getType()}):`,
+            JSON.stringify(errorResponse)
+        )
+        if (isHttpContext) {
+            const response = host.switchToHttp().getResponse()
+            response.status(status).json(errorResponse)
+        }
+        if (isRpcContext) {
+            return errorResponse
+        }
     }
 }

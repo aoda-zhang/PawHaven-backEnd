@@ -13,7 +13,6 @@ interface SharedModuleOptions {
     // const currentEnv = process.env.NODE_ENV ?? 'uat'
     // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
     configFilePath: string
-    microServiceNames?: string[]
     isIntergrateMiddware?: boolean
     isIntergrateHttpInterceptor?: boolean
     isIntergrateHttpExceptionFilter?: boolean
