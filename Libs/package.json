@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "shared-backend",
+  "name": "@aoda/shared",
   "version": "1.0.0",
   "engines": {
     "node": ">=22",
