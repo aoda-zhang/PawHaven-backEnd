@@ -12,9 +12,10 @@ class DatabaseModule {
     static forRoot(configFilePath: string): DynamicModule {
         try {
             const configValues = getConfigValues(configFilePath)
-            const availableDBConnections = configValues?.[ConfigKeys.DBConnections]
-                ?.filter((item) => item?.enable)
-                ?.map((item) => item?.options)
+            const availableDBConnections =
+                configValues?.[ConfigKeys.DBConnections]
+                    ?.filter((item) => item?.enable)
+                    ?.map((item) => item?.options) ?? []
             const isMultipleDB = availableDBConnections?.length > 1
             const connectionProviders = availableDBConnections?.map((DBItem) => ({
                 connectionName: DBItem,

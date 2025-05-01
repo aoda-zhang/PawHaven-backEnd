@@ -1,4 +1,5 @@
 import path from 'node:path'
+import ACLModule from '@modules/ACL/ACLs.module'
 import AuthModule from '@modules/Auth/auth.module'
 import { TripModule } from '@modules/Trip/trip.module'
 import { Module } from '@nestjs/common'
@@ -7,9 +8,7 @@ import SignGuard from '@shared/guards/Sign.guard'
 import SharedModule from '@shared/shared.module'
 import { DocumentModule } from '@modules/Document/document.module'
 import { EnvConstant } from '@shared/constants/constant'
-import JWTGuard from '@shared/guards/JWT.guard'
-import { JwtModule } from '@nestjs/jwt'
-// import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
+import UserModule from '@modules/User/user.module'
 const currentEnv = process.env.NODE_ENV ?? 'uat'
 const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
 
@@ -20,25 +19,18 @@ const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEn
             isIntergrateHttpExceptionFilter: true,
             isIntergrateHttpInterceptor: true
         }),
-        JwtModule,
         TripModule,
         DocumentModule,
-        AuthModule
+        UserModule,
+        AuthModule,
+        ACLModule
     ],
     controllers: [],
     providers: [
         {
             provide: APP_GUARD,
             useClass: SignGuard
-        },
-        {
-            provide: APP_GUARD,
-            useClass: JWTGuard
         }
-        // {
-        //     provide: APP_GUARD,
-        //     useClass: ACLGuard
-        // }
     ]
 })
 export class AppModule {}

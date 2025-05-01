@@ -1,8 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import CreateUserDTO from '@shared/DTO/Auth/create-user.dto'
+import CreateUserDTO from '@modules/User/dto/create-user.dto'
 import AuthService from './auth.service'
-import NoToken from '@shared/decorators/noToken.decorator'
-import { Schema } from 'mongoose'
+import NoToken from '@shared/decorators/noToken.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -22,9 +21,8 @@ export class AuthController {
 
     @NoToken()
     @Post('/refresh')
-    async refresh(
-        @Body() body: { refreshToken: { userName: string; userID: Schema.Types.ObjectId } }
-    ) {
-        return this.authService.refresh(body?.refreshToken)
+    async refresh(@Body() body: { refreshToken: string }) {
+        const tokenInfo = await this.authService.verifyRefreshToken(body?.refreshToken)
+        return this.authService.refresh(tokenInfo)
     }
 }
