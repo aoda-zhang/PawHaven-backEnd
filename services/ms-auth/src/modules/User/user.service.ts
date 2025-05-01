@@ -1,14 +1,14 @@
 import ACLService from '@modules/ACL/ACLs.service'
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import CommonDBCollections from '@shared/models/common.DBcollection'
-import { User } from '@shared/models/user.schema'
 import { Model } from 'mongoose'
+import AuthDBCollections from 'src/models/auth.DBcollection'
+import { User } from '../../models/user.schema'
 
 @Injectable()
 class UserService {
     constructor(
-        @InjectModel(CommonDBCollections.USER) private userModel: Model<User>,
+        @InjectModel(AuthDBCollections.USER) private userModel: Model<User>,
         private ACL: ACLService
     ) {}
 

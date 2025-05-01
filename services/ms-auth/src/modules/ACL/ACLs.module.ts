@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ResourceSchema } from '@shared/models/resource.schema'
 import { RoleSchema } from '@shared/models/role.schema'
 import { UserSchema } from '@shared/models/user.schema'
-import GatewayDBCollections from 'src/models/center.DBcollection'
+import GatewayDBCollections from 'src/models/auth.DBcollection'
 import ACLController from './ACLs.controller'
 import ACLService from './ACLs.service'
 

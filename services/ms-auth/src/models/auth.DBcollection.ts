@@ -1,4 +1,4 @@
-const GatewayDBCollections = {
+const AuthDBCollections = {
     PERMISSION: 'Permissions',
     USER: 'Users',
     ROLE: 'Roles',
@@ -6,4 +6,4 @@ const GatewayDBCollections = {
     ROLE_PERMISSON: 'RolePermission'
 }
 
-export default GatewayDBCollections
+export default AuthDBCollections

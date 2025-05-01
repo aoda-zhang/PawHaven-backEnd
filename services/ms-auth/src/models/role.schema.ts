@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import CommonDBCollections from './common.DBcollection'
 import CommonSchema from './common.schema'
+import AuthDBCollections from './auth.DBcollection'
 
-@Schema({ collection: CommonDBCollections.ROLE, timestamps: true })
+@Schema({ collection: AuthDBCollections.ROLE, timestamps: true })
 export class Role extends CommonSchema {
     @Prop({
         required: true,
