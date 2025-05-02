@@ -29,9 +29,6 @@ class HttpClientInstance {
             throw new Error(`Missing baseURL or path: base="${baseURL}", path="${path}"`)
         }
         const fullUrl = `${cleanedBase}/${cleanedPath}`
-        if (!/^https?:\/\//.test(fullUrl)) {
-            throw new Error(`Invalid composed URL: "${fullUrl}"`)
-        }
         return fullUrl
     }
 
