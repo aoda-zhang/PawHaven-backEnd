@@ -15,8 +15,8 @@ export default class DocumentService {
     }
     getDefaultTripViews = async () => {
         try {
-            // return await this.httpClient.get('file/v1/default-trip-views')
-            return await this.httpService.get('http://ms-document-service-uat.fullstack-namespace-uat.svc.cluster.local/api/document/file/v1/default-trip-views')
+            return await this.http.get(null, "http://ms-document-service-uat.fullstack-namespace-uat.svc.cluster.local/api/document/file/v1/default-trip-views")
+            // return await this.httpService.get('http://ms-document-service-uat.fullstack-namespace-uat.svc.cluster.local/api/document/file/v1/default-trip-views')
 
         } catch (error) {
             throw new Error(`Error fetching default trip views: ${error}`)
