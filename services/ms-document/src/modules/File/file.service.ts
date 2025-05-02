@@ -1,5 +1,5 @@
 export class FileService {
-    getTripDefaultViews(locale: string) {
+    getTripDefaultViews() {
         return [
             {
                 img: 'https://www.travelandleisure.com/thmb/LtxHE8ECg6zBz1tM3KtCheUnZO4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/TAL-colosseum-WORLDWONDERS0523-74ede1158daf493f97aa2a8c8474f9cf.jpg',

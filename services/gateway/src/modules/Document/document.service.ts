@@ -11,9 +11,9 @@ export default class DocumentService {
     ) {
         this.httpClient = this.http.create(this.configService.get('documentService.baseURL'))
     }
-    getDefaultTripViews = async (locale: string) => {
+    getDefaultTripViews = async () => {
         try {
-            return await this.httpClient.get(`/file/v1/default-trip-views/${locale}`)
+            return await this.httpClient.get('/file/v1/default-trip-views')
         } catch (error) {
             throw new Error(`Error fetching default trip views: ${error}`)
         }

@@ -5,8 +5,8 @@ import { FileService } from './file.service'
 export class FileController {
     constructor(private readonly fileService: FileService) {}
 
-    @Get('/v1/default-trip-views/:locale')
-    getTrip(@Param('locale') locale: string) {
-        return this.fileService.getTripDefaultViews(locale)
+    @Get('/v1/default-trip-views')
+    getTrip() {
+        return this.fileService.getTripDefaultViews()
     }
 }
