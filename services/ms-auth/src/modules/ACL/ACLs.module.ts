@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { ResourceSchema } from '@shared/models/resource.schema'
-import { RoleSchema } from '@shared/models/role.schema'
-import { UserSchema } from '@shared/models/user.schema'
 import GatewayDBCollections from 'src/models/auth.DBcollection'
 import ACLController from './ACLs.controller'
 import ACLService from './ACLs.service'
+import { RoleSchema } from '@models/role.schema'
+import { ResourceSchema } from '@models/resource.schema'
+import { UserSchema } from '@models/user.schema'
 
 @Module({
     imports: [

@@ -1,5 +1,5 @@
+import { ResourceType } from '@models/permission.schema'
 import { ApiProperty } from '@nestjs/swagger'
-import { ResourceType } from '@shared/models/permission.schema'
 import { Type } from 'class-transformer'
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 

@@ -1,28 +1,26 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Controller } from '@nestjs/common'
 import CreateUserDTO from '@modules/User/dto/create-user.dto'
 import AuthService from './auth.service'
-import NoToken from '@shared/decorators/noToken.decorator';
+import { MessagePattern, Payload } from '@nestjs/microservices'
+import AuthMessagePattern from '@shared/constants/MSMessagePatterns/auth.messagePattern'
 
-@Controller('auth')
+@Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @NoToken()
-    @Post('/register')
-    register(@Body() userInfo: CreateUserDTO) {
+    @MessagePattern(AuthMessagePattern.REGISTER)
+    register(@Payload() userInfo: CreateUserDTO) {
         return this.authService.register(userInfo)
     }
 
-    @NoToken()
-    @Post('/login')
-    async login(@Body() userInfo: { userName: string; password: string }) {
+    @MessagePattern(AuthMessagePattern.LOGIN)
+    async login(@Payload() userInfo: { userName: string; password: string }) {
         return this.authService.login(userInfo?.userName, userInfo?.password)
     }
 
-    @NoToken()
-    @Post('/refresh')
-    async refresh(@Body() body: { refreshToken: string }) {
-        const tokenInfo = await this.authService.verifyRefreshToken(body?.refreshToken)
+    @MessagePattern(AuthMessagePattern.REFRESH)
+    async refresh(@Payload() refreshToken: string) {
+        const tokenInfo = await this.authService.verifyRefreshToken(refreshToken)
         return this.authService.refresh(tokenInfo)
     }
 }

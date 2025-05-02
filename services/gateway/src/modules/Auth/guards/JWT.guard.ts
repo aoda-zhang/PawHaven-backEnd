@@ -1,15 +1,21 @@
-import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import {
+    BadRequestException,
+    CanActivate,
+    ExecutionContext,
+    ForbiddenException,
+    Injectable
+} from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
-import { Decorators, LocaleKeys } from '../constants/enum'
-
+import { Decorators, LocaleKeys } from '@shared/constants/enum'
 import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
-} from '../core/httpClient/interface'
-import trime from '../utils/trime'
+} from '@shared/core/httpClient/interface'
+import trime from '@shared/utils/trime'
+import { log } from 'node:console'
 
 @Injectable()
 export default class JWTGuard implements CanActivate {
@@ -54,13 +60,16 @@ export default class JWTGuard implements CanActivate {
         } catch (error) {
             switch (trime(error?.message)) {
                 // 根据不同的错误情况，设置特定的业务code，方便前端做对应处理
-                case HttpBusinessCode.jwtexpired || HttpBusinessCode.invalidToken:
+                case HttpBusinessCode.jwtexpired ||
+                    HttpBusinessCode.invalidToken ||
+                    HttpBusinessCode.invalidSign:
                     response.data = HttpBusinessMappingCode.jwtexpired
                     break
                 default:
                     break
             }
-            throw new BadRequestException(`error:${error}`)
+            log('JWTGuard error:', error)
+            throw new ForbiddenException("User doesn't have permission to access this resource")
         }
     }
 }

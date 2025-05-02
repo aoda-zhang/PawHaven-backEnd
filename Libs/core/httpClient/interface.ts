@@ -7,7 +7,8 @@ export interface HttpResType {
 export enum HttpBusinessCode {
     // jwt 过期
     jwtexpired = 'jwtexpired',
-    invalidToken = 'invalidtoken'
+    invalidToken = 'invalidtoken',
+    invalidSign = 'invalidsignature',
 }
 export enum HttpReqHeader {
     timestamp = 'x-timestamp',

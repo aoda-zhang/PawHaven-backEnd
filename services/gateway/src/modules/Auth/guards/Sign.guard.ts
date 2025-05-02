@@ -1,13 +1,13 @@
 import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
-import { Decorators } from '../constants/enum'
+import { Decorators } from '@shared/constants/enum'
 import {
     HttpBusinessCode,
     HttpBusinessMappingCode,
     HttpReqHeader
-} from '../core/httpClient/interface'
-import trime from '../utils/trime'
+} from '@shared/core/httpClient/interface'
+import trime from '@shared/utils/trime'
 import CryptoJS from 'crypto-js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'

@@ -18,8 +18,9 @@
     "outDir": "build",
     "paths": {
       "@shared/*": ["src/shared/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@models/*": ["src/models/*"],
     }
   },
-  "include": ["src"]
+  "include": ["src", "../gateway/src/modules/HealthCheck"]
 }

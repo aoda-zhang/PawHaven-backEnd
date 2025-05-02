@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Resource } from '@shared/models/resource.schema'
-import { Role } from '@shared/models/role.schema'
 import { plainToClass } from 'class-transformer'
 import { validate } from 'class-validator'
 import { Model } from 'mongoose'
@@ -9,6 +7,8 @@ import GatewayDBCollections from 'src/models/auth.DBcollection'
 import ResourceDTO from './dto/resource.dto'
 import RoleUpdateDTO from './dto/role-update'
 import RoleDTO from './dto/role.dto'
+import { Role } from '@models/role.schema'
+import { Resource } from '@models/resource.schema'
 
 @Injectable()
 export default class ACLService {

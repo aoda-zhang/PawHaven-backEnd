@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import CommonSchema from '@shared/models/common.schema'
 import TripDBCollection from './trip.DBcollection'
+import CommonSchema from './common.schema'
 
 @Schema({ collection: TripDBCollection.HISTORY, timestamps: true })
 export class TripHistory extends CommonSchema {
