@@ -19,18 +19,7 @@ class HttpClientInstance {
         private readonly defaultHeaders: Record<string, string>,
         private readonly retryCount: number,
         private readonly retryDelay: number
-    ) {}
-
-    private getFullURL(baseURL: string, path: string): string {
-        const cleanedBase = baseURL?.trim().replace(/\/+$/, '')
-        const cleanedPath = path?.trim().replace(/^\/+/, '')
-
-        if (!cleanedBase || !cleanedPath) {
-            throw new Error(`Missing baseURL or path: base="${baseURL}", path="${path}"`)
-        }
-        const fullUrl = `${cleanedBase}/${cleanedPath}`
-        return fullUrl
-    }
+    ) { }
 
     private async request<T>(
         method: 'get' | 'post' | 'put' | 'delete',
@@ -38,18 +27,21 @@ class HttpClientInstance {
         data?: any,
         options?: RequestOptions
     ): Promise<T> {
-        const fullUrl = this.getFullURL(this.baseURL, url)
         const headers = {
             ...this.defaultHeaders,
             ...options?.headers
         }
+
+        const cleanedBase = this.baseURL.trim().replace(/\/+$/, '');
+        const cleanedPath = url.trim().replace(/^\/+/, '');
         const requestConfig: AxiosRequestConfig = {
             ...options?.config,
             headers,
-            url: fullUrl,
+            baseURL: cleanedBase,
+            url: `/${cleanedPath}`,
             method,
-            data
-        }
+            data,
+        };
 
         try {
             const response = await firstValueFrom(
@@ -60,7 +52,7 @@ class HttpClientInstance {
                     }),
                     map((res: AxiosResponse<T>) => res.data),
                     catchError((error: AxiosError) => {
-                        this.logger.error(`HTTP ${method.toUpperCase()} ${fullUrl} failed`, error)
+                        this.logger.error(`HTTP ${method.toUpperCase()} ${requestConfig?.url} failed`, error)
                         if (error?.code === 'ECONNABORTED') {
                             throw new HttpException('Request timeout', HttpStatus.GATEWAY_TIMEOUT)
                         }
@@ -80,7 +72,7 @@ class HttpClientInstance {
             return response
         } catch (error) {
             this.logger.error(
-                `Final request failed: ${method.toUpperCase()} ${fullUrl}`,
+                `Final request failed: ${method.toUpperCase()} ${requestConfig?.url}`,
                 error.message
             )
             throw error
@@ -109,7 +101,7 @@ class HttpClientService {
     constructor(
         private readonly httpService: HttpService,
         private readonly config: ConfigService
-    ) {}
+    ) { }
 
     create(baseURL: string) {
         if (!baseURL) {
