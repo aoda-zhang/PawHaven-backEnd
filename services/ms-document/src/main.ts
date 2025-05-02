@@ -40,8 +40,7 @@ async function bootstrap() {
     const port = app.get(ConfigService).get('http.port') ?? 8082
     // As a web service
     await app
-        .listen(port, () => {
-            // eslint-disable-next-line no-unused-expressions
+        .listen(port, '0.0.0.0', () => {
             ;[EnvConstant.dev, EnvConstant.uat].includes(currentENV?.toUpperCase()) &&
                 console.log(`MS_Document Running on local:  http://localhost:${port}`)
         })
