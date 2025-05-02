@@ -50,10 +50,7 @@ class HttpClientInstance {
                     }),
                     map((res: AxiosResponse<T>) => res.data),
                     catchError((error: AxiosError) => {
-                        this.logger.error(
-                            `HTTP ${method.toUpperCase()} ${fullUrl} failed`,
-                            error.message
-                        )
+                        this.logger.error(`HTTP ${method.toUpperCase()} ${fullUrl} failed`, error)
                         if (error?.code === 'ECONNABORTED') {
                             throw new HttpException('Request timeout', HttpStatus.GATEWAY_TIMEOUT)
                         }
