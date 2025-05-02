@@ -21,18 +21,31 @@ class HttpClientInstance {
         private readonly retryDelay: number
     ) {}
 
+    private getFullURL(baseURL: string, path: string): string {
+        const cleanedBase = baseURL?.trim().replace(/\/+$/, '')
+        const cleanedPath = path?.trim().replace(/^\/+/, '')
+
+        if (!cleanedBase || !cleanedPath) {
+            throw new Error(`Missing baseURL or path: base="${baseURL}", path="${path}"`)
+        }
+        const fullUrl = `${cleanedBase}/${cleanedPath}`
+        if (!/^https?:\/\//.test(fullUrl)) {
+            throw new Error(`Invalid composed URL: "${fullUrl}"`)
+        }
+        return fullUrl
+    }
+
     private async request<T>(
         method: 'get' | 'post' | 'put' | 'delete',
         url: string,
         data?: any,
         options?: RequestOptions
     ): Promise<T> {
-        const fullUrl = `${this.baseURL}${url}`
+        const fullUrl = this.getFullURL(this.baseURL, url)
         const headers = {
             ...this.defaultHeaders,
             ...options?.headers
         }
-
         const requestConfig: AxiosRequestConfig = {
             ...options?.config,
             headers,
@@ -102,6 +115,10 @@ class HttpClientService {
     ) {}
 
     create(baseURL: string) {
+        if (!baseURL) {
+            throw new Error('HttpClientService: baseURL is required')
+        }
+
         const defaultHeaders = {
             'X-App-Source': 'nestjs-gateway',
             'X-Env': this.config.get<string>('NODE_ENV') || 'development'
@@ -112,7 +129,7 @@ class HttpClientService {
 
         return new HttpClientInstance(
             this.httpService,
-            baseURL,
+            baseURL.trim(),
             defaultHeaders,
             retryCount,
             retryDelay

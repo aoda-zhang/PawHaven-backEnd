@@ -13,7 +13,7 @@ export default class DocumentService {
     }
     getDefaultTripViews = async () => {
         try {
-            return await this.httpClient.get('/file/v1/default-trip-views')
+            return await this.httpClient.get('file/v1/default-trip-views')
         } catch (error) {
             throw new Error(`Error fetching default trip views: ${error}`)
         }
