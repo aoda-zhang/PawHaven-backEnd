@@ -1,15 +1,3 @@
 # Fullstack Backend
 
-##  How to link shared library
-
-For Mac
-
-```
-ln -s ../../../Libs shared
-```
-
-For Windows
-
-```
-mklink /D shared ..\..\Libs
-```
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aoda-zhang/fullStack-backEnd)
