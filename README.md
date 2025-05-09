@@ -15,21 +15,21 @@ Trip is a full-stack travel journal app designed to help users log and revisit t
 
 Key features include:
 
-	•	🔐 User authentication (Sign up & Login)
-	•	📝 Creating and editing travel logs
-	•	📖 Browsing trip history
-	•	📄 Generating shareable PDF reports for each trip
-	•	🔧 More features coming soon: search, social sharing, advanced filters…
+	• 🔐 User authentication (Sign up & Login)
+	• 📝 Creating and editing travel logs
+	• 📖 Browsing trip history
+	• 📄 Generating shareable PDF reports for each trip
+	• 🔧 More features coming soon: search, social sharing, advanced filters…
 
 All built with modern, scalable tech—including React,Vite,NestJS,MongoDB,Azure.
 
 🚀 How to Get Started
 
-	1.	Make sure you have Node.js installed
-	2.	Create a free MongoDB Atlas account
-	3.	Clone this repo
-	4.	Fill in your configuration in the /config folder
-	5.	Run the dev server and start building!
+	1. Make sure you have Node.js installed
+	2. Create a free MongoDB Atlas account
+	3. Clone this repo
+	4. Fill in your configuration in the /config folder
+	5. Run the dev server and start building!
 
 
 🧠 Want Smart, Instant Documentation?
