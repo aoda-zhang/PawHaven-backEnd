@@ -27,7 +27,7 @@ This project is a fullstack application built with NestJS, crafted to ensure fle
 - MongoDB
 - Redis
 - Mailer
-- PDFKit
+- puppeteer
 
 🧠 Want Smart, Instant Documentation?
 
