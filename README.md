@@ -1,7 +1,10 @@
 # FullStack BackEnd
 
 ✨ What is this?
-This project is a fullstack application built with NestJS, crafted to ensure flexibility, readability, and maintainability. It features a modular architecture with clear separation of concerns, allowing easy scaling and smooth collaboration. The backend is seamlessly integrated with the React frontend and follows modern best practices for clean code and performance.
+
+This project is a fullstack application built with NestJS (backend) and React (frontend), implementing a modular, scalable architecture with a clear separation of concerns.
+
+It leverages a modern toolchain aligned with [roadmap.sh’s](https://roadmap.sh) recommended technologies to ensure high code quality, maintainability, and performance. The backend and frontend are fully decoupled yet seamlessly integrated for API communication and shared logic patterns.
 
 🌟 Highlights
 
