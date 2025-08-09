@@ -1,76 +1,76 @@
-# 🔧 FullStack Backend
+[English](README.md) | [中文](READMECN.md)
+
+# PawHaven Backend
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?logo=nestjs&logoColor=white)
-![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
-![License](https://img.shields.io/github/license/aoda-zhang/fullStack-backEnd)
+![Node.js](https://img.shields.io/badge/Node.js-43853d?logo=node.js&logoColor=white)
+![License](https://img.shields.io/github/license/aoda-zhang/PawHaven-backEnd)
+
+## ✨ What is this?
+
+This is the backend service for **PawHaven**, a compassionate full-stack platform for rescuing stray animals.  
+It is built with [**NestJS**](https://nestjs.com/) and designed with a modular, scalable architecture.
+
+It provides secure and efficient APIs for the frontend, handles data storage, authentication, and background jobs — ensuring that the PawHaven ecosystem runs smoothly.
 
 ---
 
-### ✨ What is this?
+## 🌟 Project Overview
 
-This is the backend of a fullstack application built with [**NestJS**](https://github.com/aoda-zhang/fullStack-backEnd), seamlessly integrated with the [**React frontend**](https://github.com/aoda-zhang/fullStack-frontEnd). It adopts a modular, scalable architecture with a clear separation of concerns.
+PawHaven Backend is the heart of our mission: to unite tech with compassion.  
+It manages all server-side logic, from user authentication and rescue record management to notifications and community interactions.
 
-The stack follows modern backend development practices and utilizes top tools and patterns recommended by [roadmap.sh](https://roadmap.sh), ensuring clean code, maintainability, and production-readiness.
+For developers, it’s also a practical learning project to master backend development, API design, and cloud deployment.
 
 ---
 
 ## 🚀 Features
 
-- ✅ Built with NestJS and TypeScript
-- 🗃️ Prisma for database access
-- 🔐 JWT authentication system
-- 🌐 RESTful APIs and RPC-style services
-- 🧪 Unit and integration test ready
-- 📦 Environment-based configuration
-- 🔧 Linting, formatting, and pre-commit checks
+- **User Authentication & Authorization** — JWT-based login, role-based permissions  
+- **Rescue Record Management** — Create, read, update, and delete animal rescue records  
+- **Location Services** — Store and query sightings based on geolocation  
+- **Email Notifications** — Send invitations and updates to volunteers  
+- **Short Link Service** — Generate and manage short URLs for rescue cases  
+- **RPC Communication** — Internal microservices communication support  
+- **Database Access** — PostgreSQL with Prisma ORM (or chosen DB)  
 
 ---
 
-## 📦 Tech Stack
+## 🛠️ Technology Stack
 
-| Technology   | Description                 |
-|--------------|-----------------------------|
-| NestJS       | Backend framework           |
-| TypeScript   | Static typing               |
-| Prisma       | Database ORM                |
-| PostgreSQL   | Primary database            |
-| JWT          | Authentication mechanism    |
-| Zod          | Input validation            |
-| pnpm         | Fast package manager        |
+- **Backend Framework:** NestJS, Node.js  
+- **API Types:** REST & RPC  
+- **Database:** PostgreSQL + Prisma ORM  
+- **Auth:** JWT-based authentication with role management  
+- **Deployment:** Kubernetes, Docker, GitHub Actions CI/CD  
+- **Other Tools:** pnpm, class-validator, class-transformer  
 
 ---
 
-## 🔗 Related Frontend Repository
+## 🤝 Join Our Caring Community
 
-👉 [fullStack-frontEnd](https://github.com/aoda-zhang/fullStack-frontEnd)
-
----
-
-## 🧪 Getting Started
-
-```bash
-Enter specific services like gateway,ms-auth,etc.
-
-pnpm install
-pnpm start:dev
-```
+If you’re passionate about backend development and helping animals, PawHaven Backend is the perfect place to contribute!  
+You’ll learn how to design clean, scalable APIs while supporting a meaningful cause.
 
 ---
 
-## 🛠️ Environment Variables
+## 📩 How to Contribute
 
-Enter specific services like gateway,ms-auth,etc,update the example.yaml to your values in config folder
+1. **Fork the repository** and create your feature branch.  
+2. **Submit pull requests** with clear descriptions of your improvements.  
+3. **Report issues** or suggest features via GitHub Issues.  
+4. Help improve documentation and API tests.  
 
 ---
 
-🧠 Want Smart, Instant Documentation?
+## 🔗 Links
 
-Click the Ask DeepWiki button below — it’s an AI-powered documentation assistant trained on this project. You can ask it any question about the codebase, and it will respond with context-aware answers.
+- Frontend Repo: https://github.com/aoda-zhang/PawHaven-frontEnd  
+- Backend Repo: https://github.com/aoda-zhang/PawHaven-backEnd  
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aoda-zhang/fullStack-backEnd)
+---
 
+Thank you for supporting PawHaven — where technology meets compassion! 🐾❤️
 
-## 📄 License
-
-This project is licensed under the MIT License.
+---
